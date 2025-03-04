@@ -1,0 +1,58 @@
+/* Dark theme styles for the entire app */
+body {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+}
+
+nav {
+    background-color: hsl(219, 100%, 63%);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+nav a {
+    color: #1b1b1b;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+nav a:hover {
+    color: #76c7c0;
+}
+
+h1, h2 {
+    color: #e0e0e0;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 28px;
+}
+
+p {
+    color: #b0b0b0;
+    font-size: 16px;
+}
+
+a {
+    color: #76c7c0;
+}
+
+a:hover {
+    color: #ff8c00;
+}
+
+div {
+    margin-top: 20px;
+}
+
+/* Style the page content container */
+#page-content {
+    padding: 20px;
+}
