@@ -3,56 +3,87 @@ body {
     background-color: #1a1a1a;
     color: #e0e0e0;
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
+/* Navigation bar styling */
 nav {
     background-color: hsl(219, 100%, 63%);
     padding: 10px;
     border-radius: 5px;
+    text-align: left;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 nav a {
     color: #1b1b1b;
     text-decoration: none;
     font-weight: bold;
-    margin-right: 10px;
+    margin: 0px 10px; /* Spacing between nav links */
+    font-size: 15px;
 }
 
 nav a:hover {
     color: #76c7c0;
 }
 
-h1, h2 {
-    color: #e0e0e0;
+/* Page content container */
+#page-content {
+    padding: 30px;
+    max-width: 900px;
+    margin: 0 auto; /* Centers the content */
+    background-color: #222222;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
 }
 
+/* Title (Main Header) */
 h1 {
     font-size: 36px;
-    margin-bottom: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 25px;
+    margin-left: 10px;
+    text-align: left;
 }
 
+/* Subtitle */
 h2 {
     font-size: 28px;
+    font-weight: bold;
+    color: #e0e0e0;
+    margin-left: 20px;
 }
 
+/* Subsection Title */
+h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #d0d0d0;
+    margin-left: 40px;
+}
+
+/* Paragraph text */
 p {
+    font-size: 18px;
+    line-height: 1.6;
     color: #b0b0b0;
-    font-size: 16px;
+    margin-left: 60px;
 }
 
+/* Links */
 a {
     color: #76c7c0;
+    text-decoration: none;
 }
 
 a:hover {
     color: #ff8c00;
 }
 
+/* General div spacing */
 div {
     margin-top: 20px;
-}
-
-/* Style the page content container */
-#page-content {
-    padding: 20px;
 }

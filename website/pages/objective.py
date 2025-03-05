@@ -1,4 +1,6 @@
-from dash import html
+from app import np, go, dash, dcc, html
+
+dash.register_page(__name__, path="/objective") 
 
 layout = html.Div([
     html.H2("Project Objective"),

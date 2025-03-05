@@ -1,5 +1,6 @@
-from dash import html
+from app import np, go, dash, dcc, html
 
+dash.register_page(__name__, path="/findings") 
 layout = html.Div([
     html.H2("Major Findings"),
     html.P("Our analysis reveals several key findings regarding the integration of EVs into energy infrastructure: "
