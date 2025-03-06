@@ -9,7 +9,23 @@ from dash.dependencies import Input, Output
 
 
 from google.cloud import storage
-from io import StringIO
+from io import StringIO, BytesIO
+
+def get_csv_from_gcs(bucket_name, source_blob_name, header=None):
+    """Downloads a blob from the bucket."""
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(source_blob_name)
+    data = blob.download_as_text()
+    return pd.read_csv(StringIO(data), header=header)
+
+def get_xlsx_from_gcs(bucket_name, source_blob_name, header=None):
+    """Downloads a blob from the bucket."""
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(source_blob_name)
+    data = blob.download_as_bytes()
+    return pd.read_excel(BytesIO(data), header=header)
 
 # Initialize the Dash app with pages support
 app = dash.Dash(__name__, use_pages=True)

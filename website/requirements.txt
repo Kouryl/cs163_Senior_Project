@@ -2,5 +2,6 @@ dash
 plotly
 pandas
 Flask
+openpyxl
 gunicorn
 google-cloud-storage
