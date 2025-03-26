@@ -23,7 +23,12 @@ except FileNotFoundError:
 # Home page layout with a plot
 layout = html.Div([
     html.H2("Welcome to the EV Impact on Energy Infrastructure"),
-    html.P("This project explores the impact of electric vehicles on the energy infrastructure."),
+    html.P("The adoption of electric vehicles (EVs) plays a crucial role in the transition "
+    "toward sustainable transportation. In this project, we aim to examine the EV adoption "
+    "trends in the United States, focusing on growth patterns, geographic distribution, vehicle "
+    "characteristics, infrastructure needs, and predictive modeling to understand future adoption "
+    "trends and their impact on the energy grid. Additionally, we will also be exploring whether "
+    "the cost of charging EVs is economically viable to replace gasoline-powered vehicles."),
     dcc.Graph(
         id='ev-impact-plot',
         figure={
