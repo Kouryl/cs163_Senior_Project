@@ -2,7 +2,55 @@ from app import np, go, dash, dcc, html
 
 dash.register_page(__name__, path="/findings") 
 layout = html.Div([
-    html.H2("Major Findings"),
-    html.P("Our analysis reveals several key findings regarding the integration of EVs into energy infrastructure: "
-           "1. Increased demand during peak hours, 2. The need for infrastructure upgrades, 3. Potential grid resilience improvements with smart charging.")
+    html.H2("Major Findings for EV Growth"),
+    html.H3("EV Energy Growth Analysis and Visualization:"),
+
+    #pacific region analysis
+    html.Div([
+        html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/results/mean%20median%20pacific.png", 
+                style={"width": '25%', "height": "auto", 
+                       "margin-bottom": '5px', 
+                       "margin-left": '50px',
+                       "margin-right": '4px',
+                    }),
+        html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/results/energy%20percentiles%20pacific.png", 
+                style={"width": '25%', "height": "auto", 
+                       "margin-bottom": '5px', 
+                       "margin-left": '5px',
+                    })
+    ], style={'display': 'flex', 'flex-direction': 'row'}),
+    html.P("Summary: The left plot above shows the median and mean values for the Pacific region, while the right plot shows "
+           "the percentiles for energy consumption.",
+           style={'max-width': '50vw'}),
+
+    #global analysis
+    html.Div([
+        html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/results/mean%20and%20median%20ev%20usage.png", 
+                style={"width": '25%', "height": "auto", 
+                       "margin-bottom": '5px', 
+                       "margin-left": '50px',
+                       "margin-right": '4px',
+                    }),
+        html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/results/energyusage%20percentiles%20overtime.png", 
+                style={"width": '25%', "height": "auto", 
+                       "margin-bottom": '5px', 
+                       "margin-left": '5px',
+                    })
+    ], style={'display': 'flex', 'flex-direction': 'row'}),
+    html.P("Summary: Similar to the above plots, except this is a global analysis, meaning it includes all regions.",
+           style={'max-width': '50vw'}),
+    
+
+    html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/results/medianusageperevsebyyear.png", 
+             style={"width": '50%', "height": "auto",  "margin": 'auto 50px' }),
+    html.P("Summary: This plot shows the median energy consumption per EV station by year and region. "
+           "The data indicates a linear increase over the span of 3 years for each region.",
+           style={'max-width': '50vw'}),
+
+    html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/results/LReg%20charge_dur%20and%20usage.png", 
+             style={"width": '50%', "height": "auto",  "margin": 'auto 50px' }),
+    html.P("Summary: In this plot of a linear regression, we can see that charge duration has a positive correlation with energy consumption. "
+           "However, the R-squared value was 0.263, indicating that 73.7 of variance was not captured by the model. "
+           "Suggesting a weak relationship between charge duration and energy usage",
+           style={'max-width': '50vw'}),
 ])

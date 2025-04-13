@@ -41,7 +41,11 @@ app.layout = html.Div([
         " | ",
         dcc.Link("Analytical Methods", href="/methods"),
         " | ",
-        dcc.Link("Major Findings", href="/findings"),
+        dcc.Link("EV Growth Findings", href="/findings"),
+        " | ",
+        dcc.Link("Electric vs Gasoline Findings", href="/EVvsGas"),
+        " | ",
+        dcc.Link("Future Predictions and Insights", href="/predictions"),
     ]),
     html.H1("EV Impact on Energy Infrastructure"),
     

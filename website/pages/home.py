@@ -5,7 +5,7 @@ dash.register_page(__name__, path="/")
 BUCKET_NAME = os.environ.get("BUCKET_NAME")
 
 try: #reading energy consumption data
-    data = get_xlsx_from_gcs(BUCKET_NAME, 'HS861 2010-.xlsx', header=2)
+    data = get_xlsx_from_gcs(BUCKET_NAME, 'data/HS861 2010-.xlsx', header=2)
     data = data[['Year', 'STATE', 'Thousand Dollars.4', 'Megawatthours.4', 'Cents/kWh.4']]
     data = data[data['STATE'] == 'CA']
     data['Megawatthours.4'] = pd.to_numeric(data['Megawatthours.4'], errors='coerce')
@@ -14,7 +14,7 @@ except FileNotFoundError:
     print("Energy consumption data file not found")
 
 try:
-    data = get_xlsx_from_gcs(BUCKET_NAME, 'annual_generation_state.xlsx', header=1)
+    data = get_xlsx_from_gcs(BUCKET_NAME, 'data/annual_generation_state.xlsx', header=1)
     data = data[(data['STATE'] == 'CA') & (data['ENERGY SOURCE'] == 'Total') & (data['YEAR'] >= 2010) & (data['TYPE OF PRODUCER'] == 'Total Electric Power Industry')]
     generation = data
 except FileNotFoundError:
