@@ -3,16 +3,21 @@ from dash import dcc, html
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
+import os
+from app import get_csv_from_gcs
 
 dash.register_page(__name__, path="/EVvsGas")
 
-# Load and Process the Data
-gas_path = "data/Monthly Gas Prices.csv"
-elec_path = "data/California Electric Rates.csv"
+# Load and Process the Data from GCS
+BUCKET_NAME = os.environ.get("BUCKET_NAME", "evernergy163.appspot.com")
+gas_df = get_csv_from_gcs(BUCKET_NAME, 'data/Monthly Gas Prices.csv')
+elec_df = get_csv_from_gcs(BUCKET_NAME, 'data/California Electric Rates.csv')
 
-# --- Gas Prices Data ---
-gas_df = pd.read_csv(gas_path, skiprows=3, usecols=[0, 1])
-gas_df.columns = ['Date', 'Gas Price']
+# --- Process Gas Prices Data ---
+if gas_df.columns[0] == "Unnamed: 0":
+    gas_df = pd.read_csv(f"gs://{BUCKET_NAME}/data/Monthly Gas Prices.csv", skiprows=3, usecols=[0, 1])
+    gas_df.columns = ['Date', 'Gas Price']
+
 gas_df = gas_df[gas_df['Date'] != 'Date'].reset_index(drop=True)
 gas_df['Gas Price'] = pd.to_numeric(gas_df['Gas Price'], errors='coerce')
 gas_df['Date'] = pd.to_datetime(gas_df['Date'], format='%b-%Y', errors='coerce')
@@ -21,7 +26,6 @@ gas_df = gas_df[(gas_df['Date'].dt.year >= 2000) & (gas_df['Date'].dt.year <= 20
 gas_df['YearMonth'] = gas_df['Date'].dt.to_period('M')
 
 # --- Process Electric Rates Data ---
-elec_df = pd.read_csv(elec_path)
 if "Value (USD/kWh)" in elec_df.columns:
     elec_df = elec_df.rename(columns={"Value (USD/kWh)": "Electric Rate"})
 elec_df['Date'] = pd.to_datetime(elec_df['Date'], errors='coerce')
@@ -29,17 +33,19 @@ elec_df = elec_df.dropna(subset=['Date'])
 elec_df = elec_df[(elec_df['Date'].dt.year >= 2000) & (elec_df['Date'].dt.year <= 2024)]
 elec_df['YearMonth'] = elec_df['Date'].dt.to_period('M')
 
+# --- Merge the Datasets on "YearMonth" ---
 merged_df = pd.merge(
     gas_df[['YearMonth', 'Gas Price', 'Date']],
     elec_df[['YearMonth', 'Electric Rate']],
     on='YearMonth'
 )
 
-# Analyses
-# 2.1 Correlation Analysis (Long-Term)
+# Analysis Calculations
+
+# 1. Long-Term Correlation Analysis
 corr = merged_df[['Gas Price', 'Electric Rate']].corr().iloc[0, 1]
 
-# 2.2 Monthly Rate of Change Analysis
+# 2. Monthly Rate of Change Analysis
 merged_df['Gas Rate Change (%)'] = merged_df['Gas Price'].pct_change() * 100
 merged_df['Electric Rate Change (%)'] = merged_df['Electric Rate'].pct_change() * 100
 mean_gas_change = merged_df['Gas Rate Change (%)'].mean()
@@ -47,12 +53,14 @@ mean_elec_change = merged_df['Electric Rate Change (%)'].mean()
 rate_changes = merged_df[['Gas Rate Change (%)', 'Electric Rate Change (%)']].dropna()
 corr_rate = rate_changes['Gas Rate Change (%)'].corr(rate_changes['Electric Rate Change (%)'])
 
-# 2.3 Cost per Mile Analysis
-# Assumed efficiencies: 25 miles per gallon (gas) and 4 miles per kWh (electric)
+# 3. Cost per Mile Analysis
+# Assumed efficiencies: 25 MPG for gas and 4 miles per kWh for EVs.
 merged_df['Gas Cost per Mile'] = merged_df['Gas Price'] / 25
 merged_df['EV Cost per Mile'] = merged_df['Electric Rate'] / 4
 
-# Plotly Figures
+# -------------------------------
+# Create Plotly Figures
+# -------------------------------
 
 # Figure 1: Correlation Graph (Scatter Plot)
 corr_fig = go.Figure(data=[
@@ -119,6 +127,7 @@ cost_fig.update_layout(
     template="plotly_white"
 )
 
+
 # Dash Page Layout
 layout = html.Div([
     html.H2("Major Findings for Electric vs Gasoline"),
@@ -175,7 +184,7 @@ layout = html.Div([
     dcc.Graph(id='rate-change-graph', figure=roc_fig),
     html.Br(),
 
-    # Conclusions and Next Steps
+    # Overall Conclusions and Next Steps
     html.H3("Overall Implications and Next Steps"),
     dcc.Markdown("""
     **Overall Conclusions:**  
@@ -189,4 +198,3 @@ layout = html.Div([
     - Leverage these findings to support policy and investment decisions for sustainable transportation.
     """)
 ])
-
