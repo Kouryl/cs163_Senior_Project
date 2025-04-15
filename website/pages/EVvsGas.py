@@ -7,8 +7,8 @@ import numpy as np
 dash.register_page(__name__, path="/EVvsGas")
 
 # Load and Process the Data
-gas_path = "Monthly Gas Prices.csv"
-elec_path = "California Electric Rates.csv"
+gas_path = "data/Monthly Gas Prices.csv"
+elec_path = "data/California Electric Rates.csv"
 
 # --- Gas Prices Data ---
 gas_df = pd.read_csv(gas_path, skiprows=3, usecols=[0, 1])
