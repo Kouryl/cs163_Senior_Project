@@ -5,3 +5,4 @@ Flask
 openpyxl
 gunicorn
 google-cloud-storage
+numpy
