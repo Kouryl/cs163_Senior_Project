@@ -6,3 +6,5 @@ openpyxl
 gunicorn
 google-cloud-storage
 numpy
+prophet
+statsmodels
