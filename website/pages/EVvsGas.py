@@ -85,6 +85,33 @@ roc_fig = go.Figure(
     )
 )
 
+roc_fig.update_layout(
+    updatemenus=[dict(
+        type="buttons",
+        direction="right",
+        x=1.05,  # position to the right of the plot
+        y=1.15,  # a little above the title
+        showactive=True,
+        buttons=[
+            dict(
+                label="Both",
+                method="restyle",
+                args=[{"opacity": [1, 1]}],  # both full strength
+            ),
+            dict(
+                label="Gas Focus",
+                method="restyle",
+                args=[{"opacity": [1, 0.2]}],  # gas full, electric faded
+            ),
+            dict(
+                label="Electric Focus",
+                method="restyle",
+                args=[{"opacity": [0.2, 1]}],  # gas faded, electric full
+            ),
+        ]
+    )]
+)
+
 cost_fig = go.Figure(
     data=[
         go.Scatter(x=merged_df['Date'], y=merged_df['Gas Cost per Mile'], mode='lines', name='Gas Cost per Mile'),
