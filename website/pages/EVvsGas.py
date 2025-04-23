@@ -1,75 +1,141 @@
 import os
 import dash
-from dash import dcc, html
+from dash import dcc, html, callback
+from dash.dependencies import Input, Output
 import plotly.graph_objects as go
 import pandas as pd
+import numpy as np
 
-from app import get_csv_from_gcs
+from app import get_csv_from_gcs  
 
 dash.register_page(__name__, path="/EVvsGas")
 
-# Constants
-electrical_efficiency_kwh_per_mile = 4
-gas_efficiency_mpg = 25
+# Constants for default efficiencies
+DEFAULT_GAS_MPG = 25
+DEFAULT_EV_MI_PER_KWH = 4
+
 BUCKET_NAME = os.environ.get("BUCKET_NAME", "evernergy163.appspot.com")
 
-# Load data
-gas_df = get_csv_from_gcs(BUCKET_NAME, 'data/Monthly Gas Prices.csv', header=3)
-elec_df = get_csv_from_gcs(BUCKET_NAME, 'data/California Electric Rates.csv', header=0)
+# Load Data from GCS
+try:
+    gas_df = get_csv_from_gcs(BUCKET_NAME, 'data/Monthly Gas Prices.csv', header=3)
+    elec_df = get_csv_from_gcs(BUCKET_NAME, 'data/California Electric Rates.csv', header=0)
+    print("Gas DF loaded. Columns:", gas_df.columns.tolist())
+    print("Electric DF loaded. Columns:", elec_df.columns.tolist())
+except Exception as e:
+    print("Error loading CSV data from GCS:", e)
+    raise e
 
 # Process Gas Prices Data
-gas_df.columns = gas_df.columns.str.strip()
-gas_df = gas_df.rename(columns={gas_df.columns[0]: 'Date', gas_df.columns[1]: 'Gas Price'})
-gas_df = gas_df[gas_df['Date'] != 'Date'].copy()
-gas_df['Gas Price'] = pd.to_numeric(gas_df['Gas Price'], errors='coerce')
-gas_df['Date'] = pd.to_datetime(gas_df['Date'], format='%b-%Y', errors='coerce')
-gas_df = gas_df.dropna(subset=['Date'])
-gas_df = gas_df[(gas_df['Date'].dt.year >= 2000) & (gas_df['Date'].dt.year <= 2024)]
-gas_df['YearMonth'] = gas_df['Date'].dt.to_period('M')
+try:
+    gas_df.columns = gas_df.columns.str.strip()
+    print("Before renaming, Gas DF columns:", gas_df.columns.tolist())
+    gas_df = gas_df.rename(columns={gas_df.columns[0]: 'Date', gas_df.columns[1]: 'Gas Price'})
+    print("After renaming, Gas DF columns:", gas_df.columns.tolist())
+
+    gas_df = gas_df[gas_df['Date'] != 'Date'].reset_index(drop=True)
+    
+    gas_df['Gas Price'] = pd.to_numeric(gas_df['Gas Price'], errors='coerce')
+    gas_df['Date'] = pd.to_datetime(gas_df['Date'], format='%b-%Y', errors='coerce')
+    gas_df = gas_df.dropna(subset=['Date'])
+    gas_df = gas_df[(gas_df['Date'].dt.year >= 2000) & (gas_df['Date'].dt.year <= 2024)]
+    gas_df['YearMonth'] = gas_df['Date'].dt.to_period('M')
+    print("Processed Gas DF sample:")
+    print(gas_df.head())
+except Exception as e:
+    print("Error processing gas data:", e)
+    raise e
 
 # Process Electric Rates Data
-elec_df.columns = elec_df.columns.str.strip()
-elec_df = elec_df.rename(columns={'Value (USD/kWh)': 'Electric Rate'})
-elec_df['Date'] = pd.to_datetime(elec_df['Date'], errors='coerce')
-elec_df = elec_df.dropna(subset=['Date'])
-elec_df = elec_df[(elec_df['Date'].dt.year >= 2000) & (elec_df['Date'].dt.year <= 2024)]
-elec_df['YearMonth'] = elec_df['Date'].dt.to_period('M')
+try:
+    elec_df.columns = elec_df.columns.str.strip()
+    print("Before renaming, Electric DF columns:", elec_df.columns.tolist())
+    if "Value (USD/kWh)" in elec_df.columns:
+        elec_df = elec_df.rename(columns={"Value (USD/kWh)": "Electric Rate"})
+    elec_df['Date'] = pd.to_datetime(elec_df['Date'], errors='coerce')
+    elec_df = elec_df.dropna(subset=['Date'])
+    elec_df = elec_df[(elec_df['Date'].dt.year >= 2000) & (elec_df['Date'].dt.year <= 2024)]
+    elec_df['YearMonth'] = elec_df['Date'].dt.to_period('M')
+    print("Processed Electric DF sample:")
+    print(elec_df.head())
+except Exception as e:
+    print("Error processing electric data:", e)
+    raise e
 
-# Merge datasets on YearMonth
-merged_df = pd.merge(
-    gas_df[['YearMonth', 'Gas Price', 'Date']],
-    elec_df[['YearMonth', 'Electric Rate']],
-    on='YearMonth'
-)
+# Merge Datasets on YearMonth
+try:
+    merged_df = pd.merge(
+        gas_df[['YearMonth', 'Gas Price', 'Date']],
+        elec_df[['YearMonth', 'Electric Rate']],
+        on='YearMonth'
+    )
+    print("Merged DF sample:")
+    print(merged_df.head())
+except Exception as e:
+    print("Error merging data:", e)
+    raise e
 
-# Analysis
-corr = merged_df['Gas Price'].corr(merged_df['Electric Rate'])
-merged_df['Gas Rate Change (%)'] = merged_df['Gas Price'].pct_change() * 100
-merged_df['Electric Rate Change (%)'] = merged_df['Electric Rate'].pct_change() * 100
-mean_gas_change = merged_df['Gas Rate Change (%)'].mean()
-mean_elec_change = merged_df['Electric Rate Change (%)'].mean()
-corr_rate = merged_df['Gas Rate Change (%)'].corr(merged_df['Electric Rate Change (%)'])
-merged_df['Gas Cost per Mile'] = merged_df['Gas Price'] / gas_efficiency_mpg
-merged_df['EV Cost per Mile'] = merged_df['Electric Rate'] / electrical_efficiency_kwh_per_mile
+# Analysis Calculations
+try:
+    # 1. Long-Term Correlation Analysis
+    corr = merged_df['Gas Price'].corr(merged_df['Electric Rate'])
+    
+    # 2. Monthly Rate of Change Analysis
+    merged_df['Gas Rate Change (%)'] = merged_df['Gas Price'].pct_change() * 100
+    merged_df['Electric Rate Change (%)'] = merged_df['Electric Rate'].pct_change() * 100
+    mean_gas_change = merged_df['Gas Rate Change (%)'].mean()
+    mean_elec_change = merged_df['Electric Rate Change (%)'].mean()
+    corr_rate = merged_df['Gas Rate Change (%)'].corr(merged_df['Electric Rate Change (%)'])
+    
+    # 3. Cost per Mile Analysis (Nominal Prices)
+    merged_df['Gas Cost per Mile'] = merged_df['Gas Price'] / DEFAULT_GAS_MPG
+    merged_df['EV Cost per Mile'] = merged_df['Electric Rate'] / DEFAULT_EV_MI_PER_KWH
+except Exception as e:
+    print("Error during analysis calculations:", e)
+    raise e
 
-# Figures
-corr_fig = go.Figure(
-    data=[go.Scatter(x=merged_df['Electric Rate'], y=merged_df['Gas Price'], mode='markers', name='Data Points')],
-    layout=go.Layout(
-        title='Correlation: Gas Price vs Electric Rate',
-        xaxis=dict(title='Electric Rate ($/kWh)', showgrid=True, gridcolor='lightgrey', rangeslider=dict(visible=True)),
-        yaxis=dict(title='Gas Price ($/Gallon)', showgrid=True, gridcolor='lightgrey'),
+# Create Plotly Figures for Existing Analyses
+try:
+    # Figure 1: Correlation Graph
+    corr_fig = go.Figure(data=[
+        go.Scatter(
+            x=merged_df['Electric Rate'],
+            y=merged_df['Gas Price'],
+            mode='markers',
+            name='Data Points',
+            marker=dict(color='blue')
+        )
+    ])
+    corr_fig.update_layout(
+        title="Correlation: Gas Price vs Electric Rate",
+        xaxis=dict(title="Electric Rate ($/kWh)", showgrid=True, gridcolor='lightgrey', rangeslider=dict(visible=True)),
+        yaxis=dict(title="Gas Price ($/Gallon)", showgrid=True, gridcolor='lightgrey'),
         template='plotly_white'
     )
-)
+except Exception as e:
+    print("Error creating correlation graph:", e)
+    raise e
 
-roc_fig = go.Figure(
-    data=[
-        go.Scatter(x=merged_df['Date'], y=merged_df['Gas Rate Change (%)'], mode='lines', name='Gas Rate Change (%)'),
-        go.Scatter(x=merged_df['Date'], y=merged_df['Electric Rate Change (%)'], mode='lines', name='Electric Rate Change (%)')
-    ],
-    layout=go.Layout(
-        title='Monthly Percentage Change in Gas and Electric Prices',
+try:
+    # Figure 2: Monthly Rate of Change Graph
+    roc_fig = go.Figure(data=[
+        go.Scatter(
+            x=merged_df['Date'],
+            y=merged_df['Gas Rate Change (%)'],
+            mode='lines',
+            name='Gas Rate Change (%)',
+            line=dict(color='red')
+        ),
+        go.Scatter(
+            x=merged_df['Date'],
+            y=merged_df['Electric Rate Change (%)'],
+            mode='lines',
+            name='Electric Rate Change (%)',
+            line=dict(color='blue')
+        )
+    ])
+    roc_fig.update_layout(
+        title="Monthly Percentage Change in Gas and Electric Prices",
         xaxis=dict(showgrid=True, gridcolor='lightgrey'),
         yaxis=dict(showgrid=True, gridcolor='lightgrey'),
         template='plotly_white',
@@ -82,124 +148,274 @@ roc_fig = go.Figure(
             ]
         )]
     )
-)
+except Exception as e:
+    print("Error creating monthly rate of change graph:", e)
+    raise e
 
-cost_fig = go.Figure(
-    data=[
-        go.Scatter(x=merged_df['Date'], y=merged_df['Gas Cost per Mile'], mode='lines', name='Gas Cost per Mile'),
-        go.Scatter(x=merged_df['Date'], y=merged_df['EV Cost per Mile'], mode='lines', name='EV Cost per Mile', line=dict(dash='dash'))
-    ],
-    layout=go.Layout(
-        title='Cost per Mile Comparison (Assumed Efficiencies)',
+try:
+    # Figure 3: Cost per Mile Graph
+    cost_fig = go.Figure(data=[
+        go.Scatter(
+            x=merged_df['Date'],
+            y=merged_df['Gas Cost per Mile'],
+            mode='lines',
+            name='Gas Cost per Mile',
+            line=dict(color='red')
+        ),
+        go.Scatter(
+            x=merged_df['Date'],
+            y=merged_df['EV Cost per Mile'],
+            mode='lines',
+            name='EV Cost per Mile',
+            line=dict(color='orange', dash='dash')
+        )
+    ])
+    cost_fig.update_layout(
+        title="Cost per Mile Comparison (Assumed Efficiencies)",
         xaxis=dict(showgrid=True, gridcolor='lightgrey'),
         yaxis=dict(showgrid=True, gridcolor='lightgrey'),
         template='plotly_white'
     )
-)
+except Exception as e:
+    print("Error creating cost per mile graph:", e)
+    raise e
 
-# Dash layout
-layout = html.Div([
-    html.H2('Major Findings for Electric vs Gasoline', style={'marginLeft': '20px'}),
-    html.H3('Analysis and Visualization:', style={'marginLeft': '20px'}),
-
-    # Section 1
-    html.H4('1. Correlation Analysis', style={'marginLeft': '40px'}),
-    html.Div(dcc.Markdown(f"""
-**Summary:**  
-Historical data shows a moderate positive correlation (r = {corr:.2f}) between gas prices and electric rates, suggesting that long-term trends in these energy prices tend to move together.
-
-**Implications:**  
-This supports the hypothesis that common economic forces—such as inflation and commodity prices—simultaneously affect both energy sources.
-"""), style={'marginLeft': '0px'}),
-    dcc.Graph(id='correlation-graph', figure=corr_fig, config={'scrollZoom': True, 'displayModeBar': True}),
-
+# Interactive Sensitivity Analysis Section
+# This section allows users to adjust the vehicle efficiency values and see how the cost per mile changes.
+interactive_layout = html.Div([
+    html.H4("3. Interactive Sensitivity Analysis for Cost per Mile", style={'marginLeft': '40px'}),
+    dcc.Markdown("""
+    Adjust the sliders below to change the assumed vehicle efficiency for gas-powered cars (in MPG) 
+    and electric vehicles (in miles per kWh). The cost per mile graph will update accordingly.
+    """),
+    html.Label("Gas Vehicle Efficiency (MPG):", style={'marginLeft': '40px'}),
+    dcc.Slider(
+        id="mpg-slider",
+        min=10,
+        max=50,
+        step=1,
+        value=DEFAULT_GAS_MPG,
+        marks={n: str(n) for n in range(10, 51, 5)}
+    ),
     html.Br(),
-    # Section 2
-    html.H4('2. Cost per Mile Comparison', style={'marginLeft': '40px'}),
-    html.Div([
-        dcc.Markdown("""
-**Summary:**  
-Based on assumed fuel efficiencies (25 MPG for gas and 4 miles per kWh for EVs):
-"""),
-        html.Ul([
-            html.Li(f"Gas Cost per Mile: ${merged_df['Gas Cost per Mile'].mean():.3f} per mile."),
-            html.Li(f"EV Cost per Mile: ${merged_df['EV Cost per Mile'].mean():.3f} per mile.")
-        ], style={'marginLeft': '60px', 'paddingLeft': '0px', 'listStylePosition': 'inside'}),
-        dcc.Markdown("""
-**Implications:**  
-This analysis demonstrates that EVs offer a significant operational cost advantage over gas vehicles.
-""")
-    ], style={'marginLeft': '0px'}),
-    dcc.Graph(id='cost-per-mile-graph', figure=cost_fig, config={'modeBarButtonsToAdd': ['select2d', 'lasso2d'], 'scrollZoom': True}),
-
+    html.Label("EV Efficiency (miles per kWh):", style={'marginLeft': '40px'}),
+    dcc.Slider(
+        id="mi-kwh-slider",
+        min=2,
+        max=10,
+        step=0.1,
+        value=DEFAULT_EV_MI_PER_KWH,
+        marks={n: str(n) for n in range(2, 11)}
+    ),
     html.Br(),
-    # Section 3
-    html.H4('3. Monthly Rate of Change Analysis', style={'marginLeft': '40px'}),
-    html.Div([
-        dcc.Markdown("""
-**Summary:**  
-Analysis of monthly percentage changes reveals:
-"""),
-        html.Ul([
-            html.Li(f"Gas Price Rate Change: {mean_gas_change:.2f}% per month."),
-            html.Li(f"Electric Rate Change: {mean_elec_change:.2f}% per month.")
-        ], style={'marginLeft': '60px', 'paddingLeft': '0px', 'listStylePosition': 'inside'}),
+    dcc.Graph(id="interactive-cost-per-mile-graph")
+])
+
+# Define the Final Dash Page Layout
+try:
+    layout = html.Div([
+        html.H2('Major Findings for Electric vs Gasoline', style={'marginLeft': '20px'}),
+        html.H3('Analysis and Visualization:', style={'marginLeft': '20px'}),
+
+        # Section 1: Correlation Analysis
+        html.H4('1. Correlation Analysis', style={'marginLeft': '40px'}),
         dcc.Markdown(f"""
-The Pearson correlation between these changes is {corr_rate:.3f}, indicating that short-term fluctuations in gas and electric prices are nearly independent.
+        **Summary:**  
+        Historical data shows a moderate positive correlation (r = {corr:.2f}) between gas prices and electric rates, suggesting that long-term trends in these energy prices tend to move together.
 
-**Implications:**  
-Despite long-term interdependence, the short-term volatility in these markets is driven by different factors.
+        **Implications:**  
+        This supports the hypothesis that common economic forces such as inflation and commodity prices simultaneously affect both energy sources.
+        """),
+        dcc.Graph(id="correlation-graph", figure=corr_fig, config={'scrollZoom': True, 'displayModeBar': True}),
+        html.Br(),
 
-**Next Steps:**  
-Explore additional external variables and refine forecasting models for short-term price dynamics.
-"""
-        )
-    ], style={'marginLeft': '0px'}),
-    dcc.Graph(id='rate-change-graph', figure=roc_fig, config={'scrollZoom': True, 'displayModeBar': True}),
+        # Section 2: Cost per Mile Comparison (Static)
+        html.H4('2. Cost per Mile Comparison', style={'marginLeft': '40px'}),
+        dcc.Markdown(f"""
+        **Summary:**  
+        Based on assumed fuel efficiencies (25 MPG for gas and 4 miles per kWh for EVs):
 
-    html.Br(),
-    # Section 4: Forecast Images & Explanation
-    html.H4('4. Forecast Comparison and Projections (Next 5 Years)', style={'marginLeft': '20px'}),
-    html.Div(dcc.Markdown(
-        """
-**Forecast Explanation:**  
-Using Facebook Prophet models, we generated 5‑year forecasts for both gas prices and electric rates, incorporating seasonal effects and trend components. The combined comparison shows
-how both energy costs are expected to continue rising, with electric rates growing slightly faster seasonally. Individual plots include uncertainty intervals (shaded) to indicate confidence bounds, and a dashed vertical line marks the forecast start in 2025.
-"""
-    ), style={'marginLeft': '20px', 'marginRight': '20px'}),
+        **Gas Cost per Mile:** ${merged_df['Gas Cost per Mile'].mean():.3f} per mile.  
+        **EV Cost per Mile:** ${merged_df['EV Cost per Mile'].mean():.3f} per mile.
 
+        **Implications:**  
+        This analysis demonstrates that EVs offer a significant operational cost advantage over gas vehicles.
+        """),
+        dcc.Graph(id="cost-per-mile-graph", figure=cost_fig, 
+            config={'modeBarButtonsToAdd': ['select2d', 'lasso2d'], 'scrollZoom': True}),
+        html.Br(),
+
+        # Section 2.5: Interactive Sensitivity Analysis
+        interactive_layout,
+
+        html.Br(),
+        
+        # Section 3: Monthly Rate of Change Analysis
+        html.H4('4. Monthly Rate of Change Analysis', style={'marginLeft': '40px'}),
+        dcc.Markdown(f"""
+        **Summary:**  
+        Analysis of monthly percentage changes reveals:
+
+        **Gas Price Rate Change:** {mean_gas_change:.2f}% per month.  
+        **Electric Rate Change:** {mean_elec_change:.2f}% per month.
+
+        The Pearson correlation between these changes is {corr_rate:.3f}, indicating that short-term fluctuations in gas and electric prices are nearly independent.
+
+        **Implications:**  
+        Despite the long-term interdependence, the short-term volatility in these markets is driven by different factors. 
+        This suggests that while both energy sources are affected by macroeconomic trends, their short-term price movements may be influenced by different market dynamics.
+        """),
+        dcc.Graph(id="rate-change-graph", figure=roc_fig, config={'scrollZoom': True, 'displayModeBar': True}),
+        html.Br(),
+
+        html.H4('5. Forecast Comparison and Projections (Next 5 Years)', style={'marginLeft': '20px'}),
+        dcc.Markdown("""
+        **Forecast Explanation:**  
+        Using Facebook Prophet models, we generated 5‑year forecasts for both gas prices and electric rates, incorporating seasonal effects and trend components. The combined comparison shows how both energy costs are expected to continue rising, with electric rates growing slightly faster seasonally. Individual plots include uncertainty intervals (shaded) to indicate confidence bounds, and a dashed vertical line marks the forecast start in 2025.
+        """, style={'marginLeft': '20px', 'marginRight': '20px'}),
+
+        html.Div([
+    # Combined Forecast Explanation Card
     html.Div([
-        html.Img(src='https://storage.googleapis.com/evenergy163.appspot.com/results/forecast_comparison.png', style={'width': '60%', 'height': 'auto'}),
-        html.P(
-            "This combined forecast plot shows the projected trajectories of both gas prices and electric rates over the next five years, with shaded uncertainty intervals indicating model confidence.",
-            style={'textAlign': 'center', 'width': '60%', 'marginTop': '5px'}
+        html.Img(
+            src='https://storage.googleapis.com/evenergy163.appspot.com/results/forecast_comparison.png', 
+            style={
+                'width': '50%', 
+                'height': 'auto', 
+                'marginRight': '10px',
+                'marginTop': '0px'   # Remove extra top margin
+            }
         ),
-        html.Img(src='https://storage.googleapis.com/evenergy163.appspot.com/results/forecast_gas.png', style={'width': '50%', 'height': 'auto'}),
-        html.P(
-            "The gas price forecast highlights seasonal peaks and long-term upward trends, with confidence intervals widening as the projection extends further into the future.",
-            style={'textAlign': 'center', 'width': '40%', 'marginTop': '5px'}
-        ),
-        html.Img(src='https://storage.googleapis.com/evenergy163.appspot.com/results/forecast_electric.png', style={'width': '50%', 'height': 'auto'}),
-        html.P(
-            "The electric rate forecast demonstrates a strong seasonal cycle and an overall growing trend, suggesting that electric costs may continue to rise steeply into 2030.",
-            style={'textAlign': 'center', 'width': '40%', 'marginTop': '5px'}
+        html.Div(
+            "This combined forecast plot illustrates both historical and projected trajectories of gas prices (red) and electric rates (blue) spanning 2000 to 2030. The dashed vertical line indicates the start of the 5-year forecast period (2025–2030). The forecast is generated using a time-series model (Facebook Prophet), which accounts for seasonal fluctuations and long-term trends. Shaded uncertainty intervals indicate the confidence bounds of the forecast.",
+            style={
+                'textAlign': 'left', 
+                'width': '50%', 
+                'padding': '15px', 
+                'border': '1px solid #ccc', 
+                'borderRadius': '5px', 
+                'backgroundColor': '#ffffff',
+                'color': '#000000',
+                'fontSize': '16px',
+                'margin': '0'  # Remove default margin
+            }
         )
     ], style={
+        'width': '80%',             # Container width for the entire card
+        'margin': '0 auto',         # Center the container horizontally
+        'marginBottom': '30px',
         'display': 'flex',
-        'flexDirection': 'column',
-        'alignItems': 'center',
-        'rowGap': '20px',
-        'margin': '20px'
+        'flexDirection': 'row',     # Side-by-side layout
+        'alignItems': 'flex-start', # Align items to the top
+        'justifyContent': 'space-between'
     }),
 
-    html.Br(),
-    # Conclusion
-    html.H3('Overall Implications and Next Steps', style={'marginLeft': '20px'}),
-    html.Div(dcc.Markdown("""
-**Overall Conclusions:**  
-- Long-term trends in gas and electric prices indicate common economic forces.  
-- EVs offer a clear operational cost advantage based on cost per mile analysis.  
-- Forecasts project continued price increases, with electric rates exhibiting stronger seasonal growth.  
-- Uncertainty intervals highlight model confidence decreasing over time, underscoring the need for periodic recalibration.
-"""), style={'marginLeft': '0px'})
-])
+    # Gas Forecast Explanation Card
+    html.Div([
+        html.Img(
+            src='https://storage.googleapis.com/evenergy163.appspot.com/results/forecast_gas.png', 
+            style={
+                'width': '50%', 
+                'height': 'auto', 
+                'marginRight': '10px',
+                'marginTop': '0px'
+            }
+        ),
+        html.Div(
+            "The gas price forecast highlights seasonal peaks and long-term upward trends, with confidence intervals widening as the projection extends further into the future.",
+            style={
+                'textAlign': 'left',
+                'width': '50%',
+                'padding': '15px',
+                'border': '1px solid #ccc',
+                'borderRadius': '5px',
+                'backgroundColor': '#ffffff',
+                'color': '#000000',
+                'fontSize': '16px',
+                'margin': '0'
+            }
+        )
+    ], style={
+        'width': '80%',
+        'margin': '0 auto',
+        'marginBottom': '30px',
+        'display': 'flex',
+        'flexDirection': 'row',
+        'alignItems': 'flex-start',
+        'justifyContent': 'space-between'
+    }),
+
+    # Electric Forecast Explanation Card
+    html.Div([
+        html.Img(
+            src='https://storage.googleapis.com/evenergy163.appspot.com/results/forecast_electric.png', 
+            style={
+                'width': '50%', 
+                'height': 'auto', 
+                'marginRight': '10px',
+                'marginTop': '0px'
+            }
+        ),
+        html.Div(
+            "The electric rate forecast demonstrates a strong seasonal cycle and an overall growing trend, suggesting that electric costs may continue to rise steeply into 2030.",
+            style={
+                'textAlign': 'left',
+                'width': '50%',
+                'padding': '15px',
+                'border': '1px solid #ccc',
+                'borderRadius': '5px',
+                'backgroundColor': '#ffffff',
+                'color': '#000000',
+                'fontSize': '16px',
+                'margin': '0'
+            }
+        )
+    ], style={
+        'width': '80%',
+        'margin': '0 auto',
+        'marginBottom': '30px',
+        'display': 'flex',
+        'flexDirection': 'row',
+        'alignItems': 'flex-start',
+        'justifyContent': 'space-between'
+    })
+], style={
+    'display': 'flex',
+    'flexDirection': 'column',
+    'alignItems': 'center',
+    'rowGap': '20px',
+    'margin': '20px'
+}),
+html.Br(),
+
+        
+
+        # Section 5: Overall Conclusions
+        html.H3('Overall Implications and Next Steps', style={'marginLeft': '20px'}),
+        dcc.Markdown("""
+        **Overall Conclusions:**  
+        - Long-term trends in gas and electric prices indicate common economic forces.
+        - EVs offer a clear operational cost advantage based on cost per mile analysis.
+        - Forecasts project continued price increases, with electric rates exhibiting stronger seasonal growth.
+        - Uncertainty intervals highlight model confidence decreasing over time, underscoring the need for periodic recalibration.
+        """)
+    ])
+except Exception as e:
+    print("Error defining Dash layout:", e)
+    raise e
+
+# Callback for interactive sensitivity analysis
+@dash.callback(
+    Output("interactive-cost-per-mile-graph", "figure"),
+    [Input("mpg-slider", "value"), Input("mi-kwh-slider", "value")]
+)
+def update_interactive_cost_graph(mpg_value, mi_kwh_value):
+    df = merged_df.copy()
+    df["Gas Cost per Mile"] = df["Gas Price"] / mpg_value
+    df["EV Cost per Mile"] = df["Electric Rate"] / mi_kwh_value
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df["Date"], y=df["Gas Cost per Mile"], mode="lines", name="Gas Cost per Mile"))
+    fig.add_trace(go.Scatter(x=df["Date"], y=df["EV Cost per Mile"], mode="lines", name="EV Cost per Mile", line=dict(dash="dash")))
+    fig.update_layout(title="Interactive Sensitivity Analysis for Cost per Mile", xaxis_title="Date", yaxis_title="Cost per Mile (USD)", template="plotly_white")
+    return fig
+
