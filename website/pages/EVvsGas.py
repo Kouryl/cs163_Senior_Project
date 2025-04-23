@@ -286,8 +286,14 @@ try:
                 'marginTop': '0px'   # Remove extra top margin
             }
         ),
-        html.Div(
-            "This combined forecast plot illustrates both historical and projected trajectories of gas prices (red) and electric rates (blue) spanning 2000 to 2030. The dashed vertical line indicates the start of the 5-year forecast period (2025–2030). The forecast is generated using a time-series model (Facebook Prophet), which accounts for seasonal fluctuations and long-term trends. Shaded uncertainty intervals indicate the confidence bounds of the forecast.",
+html.Div(
+'''This combined forecast plot illustrates both historical and projected trajectories of gas prices (red) and electric rates (blue) spanning 2000 to 2030. The dashed vertical line indicates the start of the 5-year forecast period (2025–2030). The forecast is generated using a time-series model (Facebook Prophet), which accounts for seasonal fluctuations and long-term trends in energy prices.
+
+Observations:
+• Gas prices exhibit clear seasonal peaks and troughs, typically aligning with consumer demand cycles.
+• Electric rates display a more subtle but consistent upward trend, potentially tied to infrastructure costs and broader economic factors. 
+• Over the next 5 years, both energy sources are projected to continue rising, with electric rates growing slightly faster. This could narrow the historical cost gap between electricity and gasoline in certain market conditions.
+''',
             style={
                 'textAlign': 'left', 
                 'width': '50%', 
@@ -297,7 +303,8 @@ try:
                 'backgroundColor': '#ffffff',
                 'color': '#000000',
                 'fontSize': '16px',
-                'margin': '0'  # Remove default margin
+                'margin': '0',
+                'whiteSpace': 'pre-wrap'
             }
         )
     ], style={
@@ -321,8 +328,14 @@ try:
                 'marginTop': '0px'
             }
         ),
-        html.Div(
-            "The gas price forecast highlights seasonal peaks and long-term upward trends, with confidence intervals widening as the projection extends further into the future.",
+html.Div(
+"""The gas price forecast highlights seasonal peaks and long-term upward trends, with confidence intervals widening as the projection extends further into the future. These intervals represent the model’s estimate of uncertainty, reflecting factors such as possible shifts in supply and demand, macroeconomic influences, or policy changes.
+
+Observations:
+• Facebook Prophet model captures recurring annual patterns, shown by the repeating rises and dips that often align with summer/winter fuel demand.
+• An overall upward slope suggests that, barring major external shocks, gas prices may continue to rise steadily over the next 5 years.
+• As we move further from the last known data point, the forecast becomes more uncertain. This reflects real-world unpredictability in markets, geopolitics, and technology shifts.
+""",
             style={
                 'textAlign': 'left',
                 'width': '50%',
@@ -332,6 +345,7 @@ try:
                 'backgroundColor': '#ffffff',
                 'color': '#000000',
                 'fontSize': '16px',
+                'whiteSpace': 'pre-wrap',
                 'margin': '0'
             }
         )
