@@ -47,7 +47,7 @@ app.layout = html.Div([
         " | ",
         dcc.Link("Future Predictions and Insights", href="/predictions"),
     ]),
-    html.H1("EV Impact on Energy Infrastructure"),
+    html.H1("EV Adoption Impact on the Energy Infrastructure"),
     
     # Automatically render the current page based on dash.page_registry
     dash.page_container
