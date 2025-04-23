@@ -9,3 +9,14 @@ The adoption of electric vehicles (EVs) plays a crucial role in the transition t
 ## Broader Impacts
 
 Understanding electric vehicle (EV) adoption trends enables policymakers and environmental groups to assess the extent to which EVs contribute to reducing carbon emissions. Analyzing factors such as electric range and Clean Alternative Fuel Vehicle (CAFV) eligibility helps evaluate the effectiveness of clean energy policies and incentives. Additionally, identifying areas with high EV adoption provides insight into where environmental benefits, such as reduced air pollution, are most concentrated and where further efforts may be needed.
+
+## Pipeline
+
+## SETUP Instructions
+
+run the command below with gcloud in the repo directory, to create website.
+```
+gcloud app deploy
+```
+
+##
