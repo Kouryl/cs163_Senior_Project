@@ -183,12 +183,12 @@ except Exception as e:
 # Interactive Sensitivity Analysis Section
 # This section allows users to adjust the vehicle efficiency values and see how the cost per mile changes.
 interactive_layout = html.Div([
-    html.H4("3. Interactive Sensitivity Analysis for Cost per Mile", style={'marginLeft': '40px'}),
+    html.H4("3. Interactive Sensitivity Analysis for Cost per Mile", style={'marginLeft': '40px','color': '#000000', 'fontWeight': 'bold'}),
     dcc.Markdown("""
     Adjust the sliders below to change the assumed vehicle efficiency for gas-powered cars (in MPG) 
     and electric vehicles (in miles per kWh). The cost per mile graph will update accordingly.
     """),
-    html.Label("Gas Vehicle Efficiency (MPG):", style={'marginLeft': '40px'}),
+    html.Label("Gas Vehicle Efficiency (MPG):", style={'marginLeft': '40px','color': '#000000', 'fontWeight': 'bold'}),
     dcc.Slider(
         id="mpg-slider",
         min=10,
@@ -198,7 +198,7 @@ interactive_layout = html.Div([
         marks={n: str(n) for n in range(10, 51, 5)}
     ),
     html.Br(),
-    html.Label("EV Efficiency (miles per kWh):", style={'marginLeft': '40px'}),
+    html.Label("EV Efficiency (miles per kWh):", style={'marginLeft': '40px','color': '#000000', 'fontWeight': 'bold'}),
     dcc.Slider(
         id="mi-kwh-slider",
         min=2,
@@ -218,7 +218,7 @@ try:
         html.H3('Analysis and Visualization:', style={'marginLeft': '20px'}),
 
         # Section 1: Correlation Analysis
-        html.H4('1. Correlation Analysis', style={'marginLeft': '40px'}),
+        html.H4('1. Correlation Analysis', style={'marginLeft': '40px','color': '#000000', 'fontWeight': 'bold'}),
         dcc.Markdown(f"""
         **Summary:**  
         Historical data shows a moderate positive correlation (r = {corr:.2f}) between gas prices and electric rates, suggesting that long-term trends in these energy prices tend to move together.
@@ -230,7 +230,7 @@ try:
         html.Br(),
 
         # Section 2: Cost per Mile Comparison (Static)
-        html.H4('2. Cost per Mile Comparison', style={'marginLeft': '40px'}),
+        html.H4('2. Cost per Mile Comparison', style={'marginLeft': '40px','color': '#000000', 'fontWeight': 'bold'}),
         dcc.Markdown(f"""
         **Summary:**  
         Based on assumed fuel efficiencies (25 MPG for gas and 4 miles per kWh for EVs):
@@ -251,7 +251,7 @@ try:
         html.Br(),
         
         # Section 3: Monthly Rate of Change Analysis
-        html.H4('4. Monthly Rate of Change Analysis', style={'marginLeft': '40px'}),
+        html.H4('4. Monthly Rate of Change Analysis', style={'marginLeft': '40px','color': '#000000', 'fontWeight': 'bold'}),
         dcc.Markdown(f"""
         **Summary:**  
         Analysis of monthly percentage changes reveals:
@@ -268,7 +268,7 @@ try:
         dcc.Graph(id="rate-change-graph", figure=roc_fig, config={'scrollZoom': True, 'displayModeBar': True}),
         html.Br(),
 
-        html.H4('5. Forecast Comparison and Projections (Next 5 Years)', style={'marginLeft': '20px'}),
+        html.H4('5. Forecast Comparison and Projections (Next 5 Years)', style={'marginLeft': '20px','color': '#000000', 'fontWeight': 'bold'}),
         dcc.Markdown("""
         **Forecast Explanation:**  
         Using Facebook Prophet models, we generated 5‑year forecasts for both gas prices and electric rates, incorporating seasonal effects and trend components. The combined comparison shows how both energy costs are expected to continue rising, with electric rates growing slightly faster seasonally. Individual plots include uncertainty intervals (shaded) to indicate confidence bounds, and a dashed vertical line marks the forecast start in 2025.
@@ -403,15 +403,14 @@ Observations:
 html.Br(),
 
         
-
         # Section 5: Overall Conclusions
-        html.H3('Overall Implications and Next Steps', style={'marginLeft': '20px'}),
-        dcc.Markdown("""
-        **Overall Conclusions:**  
-        - Long-term trends in gas and electric prices indicate common economic forces.
-        - EVs offer a clear operational cost advantage based on cost per mile analysis.
-        - Forecasts project continued price increases, with electric rates exhibiting stronger seasonal growth.
-        - Uncertainty intervals highlight model confidence decreasing over time, underscoring the need for periodic recalibration.
+        html.H3('Overall Implications and Next Steps', style={'marginLeft': '20px','color': '#000000', 'fontWeight': 'bold'}),
+        html.div("""
+        Overall Conclusions:  
+        • Long-term trends in gas and electric prices indicate common economic forces.
+        • EVs offer a clear operational cost advantage based on cost per mile analysis.
+        • Forecasts project continued price increases, with electric rates exhibiting stronger seasonal growth.
+        • Uncertainty intervals highlight model confidence decreasing over time, underscoring the need for periodic recalibration.
         """)
     ])
 except Exception as e:
