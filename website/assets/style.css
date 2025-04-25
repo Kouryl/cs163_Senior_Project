@@ -172,7 +172,7 @@
     
     .card-panel {
         flex: 1 1 300px;
-        background: var(--text-light);
+        background-color: #e0e0e0 !important;
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -213,7 +213,7 @@
   /* 2. Card Styles */
   .objective-card {
     position: relative;
-    background: #fff;
+    background: #e3f2fd;
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -239,7 +239,8 @@
     margin-bottom: 0.5rem;
   }
   .intro-text {
-    font-size: 1rem;
+    font-size: 1.125rem;
+    margin-left: 0rem;
     margin-bottom: 1.5rem;
     color: #333;
   }

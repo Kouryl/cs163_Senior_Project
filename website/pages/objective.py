@@ -4,7 +4,7 @@ from app import dash
 dash.register_page(__name__, path="/objective")
 
 layout = html.Div(className="page-container", children=[
-    html.H2("Project Objective", className="page-title"),
+    html.H2("Project Objective", className="section-title"),
     html.P("This project pursues three core goals:", className="intro-text"),
 
     # Goals grid

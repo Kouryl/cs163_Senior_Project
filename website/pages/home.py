@@ -46,7 +46,9 @@ layout = html.Div(className="page-container", children=[
             )
         ]),
 
-        html.Div(className="card-panel", children=[
+        html.Div(className="card-panel",
+            style={'backgroundColor': '#e0e0e0'},
+            children=[
             html.H2("Broader Impacts", className="card-title"),
             html.Div(
                 "Understanding EV adoption helps policymakers and environmental groups assess the extent to which EVs "
