@@ -9,7 +9,7 @@ layout = html.Div([
       html.Div([
     # 1a) video background
         html.Video(
-        src="https://storage.googleapis.com/evenergy163.appspot.com/video/videoplayback.webm",
+        src="https://storage.googleapis.com/evenergy163.appspot.com/video/Complete%20Video.mp4",
         autoPlay=True, muted=True, loop=True,
         className="hero-video"
         ),
@@ -18,7 +18,7 @@ layout = html.Div([
         html.Div([
         html.H1("Discover EV Adoption Trends", className="hero-title"),
         html.P("See how EV growth is reshaping our energy grid", className="hero-subtitle"),
-        html.A("Explore Insights", href="/EVvsGas", className="hero-cta")
+        html.A("Explore Insights", href="/objective", className="hero-cta")
         ], className="hero-overlay")
     ], className="hero-section"),
 
@@ -26,18 +26,20 @@ layout = html.Div([
     html.Div([
         html.Div([
             html.H2("Project Overview", className="card-title"),
-            html.P(
+            html.Div(
                 "The adoption of electric vehicles (EVs) plays a crucial role in the transition toward sustainable transportation. "
                 "This project examines EV adoption trends in the Pacific Region and compares EV charging costs vs gasoline.",
-                className="card-text"
+                className="card-text",
+                style={'marginLeft': '20px', 'marginRight': '20px'}
             )
         ], className="card-panel"),
 
         html.Div([
             html.H2("Broader Impacts", className="card-title"),
-            html.P(
+            html.Div(
                 "Understanding EV adoption helps policymakers assess carbon emission reductions and evaluate clean energy policies.",
-                className="card-text"
+                className="card-text",
+                style={'marginLeft': '20px', 'marginRight': '20px'}
             )
         ], className="card-panel")
     ], className="cards-container")
