@@ -4,43 +4,58 @@ from dash import html, dcc
 
 dash.register_page(__name__, path="/")
 
-layout = html.Div([
-    # Hero Video Section
-      html.Div([
-    # 1a) video background
+layout = html.Div(className="page-container", children=[
+
+    # 1) Page Title (only H1)
+    html.H1(
+        "EV Adoption Impact on the Energy Infrastructure",
+        className="home-main-title"
+    ),
+
+    # 2) Hero Section (video + overlay)
+    html.Div(className="hero-section", children=[
+        # 2a) background video
         html.Video(
-        src="https://storage.googleapis.com/evenergy163.appspot.com/video/Complete%20Video.mp4",
-        autoPlay=True, muted=True, loop=True,
-        className="hero-video"
+            src="https://storage.googleapis.com/evenergy163.appspot.com/video/Complete%20Video.mp4",
+            autoPlay=True,
+            muted=True,
+            loop=True,
+            className="hero-video"
         ),
 
-        # 1b) overlay + text/button all in the same container
-        html.Div([
-        html.H1("Discover EV Adoption Trends", className="hero-title"),
-        html.P("See how EV growth is reshaping our energy grid", className="hero-subtitle"),
-        html.A("Explore Insights", href="/objective", className="hero-cta")
-        ], className="hero-overlay")
-    ], className="hero-section"),
+        # 2b) overlay: subtitle + button
+        html.Div(className="hero-overlay", children=[
+            html.H2("Discover EV Adoption Trends", className="hero-title"),
+            html.P("See how EV growth is reshaping our energy grid", className="hero-subtitle"),
+            html.A("Explore Insights", href="/objective", className="hero-cta")
+        ]),
+    ]),
 
-    # Cards Section (unchanged)
-    html.Div([
-        html.Div([
+    # 3) Cards Section (Project Overview + Broader Impacts)
+    html.Div(className="cards-container", children=[
+        html.Div(className="card-panel", children=[
             html.H2("Project Overview", className="card-title"),
             html.Div(
-                "The adoption of electric vehicles (EVs) plays a crucial role in the transition toward sustainable transportation. "
-                "This project examines EV adoption trends in the Pacific Region and compares EV charging costs vs gasoline.",
+                "The adoption of electric vehicles (EVs) plays a crucial role in the transition toward sustainable "
+                "transportation. In this project, we aim to examine the EV adoption trends in the Pacific Region, focusing "
+                "on growth patterns, geographic distribution, vehicle characteristics, and predictive "
+                "modeling to understand future adoption trends and their impact on the energy grid. Additionally, we will "
+                "also be exploring whether the cost of charging EVs is economically viable to replace gasoline-powered vehicles.",
                 className="card-text",
-                style={'marginLeft': '20px', 'marginRight': '20px'}
+                style={'marginLeft': '0px', 'marginRight': '20px'}
             )
-        ], className="card-panel"),
+        ]),
 
-        html.Div([
+        html.Div(className="card-panel", children=[
             html.H2("Broader Impacts", className="card-title"),
             html.Div(
-                "Understanding EV adoption helps policymakers assess carbon emission reductions and evaluate clean energy policies.",
+                "Understanding EV adoption helps policymakers and environmental groups assess the extent to which EVs "
+                "reduce carbon emissions and evaluate the effectiveness of clean energy policies and incentives. "
+                "Identifying areas with high EV adoption provides insight into where environmental benefits such as "
+                "reduced air pollution are most concentrated and where further efforts may be needed.",
                 className="card-text",
-                style={'marginLeft': '20px', 'marginRight': '20px'}
+                style={'marginLeft': '0px', 'marginRight': '20px'}
             )
-        ], className="card-panel")
-    ], className="cards-container")
-], className="page-container")
+        ]),
+    ])
+])

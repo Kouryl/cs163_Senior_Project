@@ -201,3 +201,89 @@
     .hero-subtitle { font-size: 1.25rem; }
     p, h1, h2, h3 { margin: 0 10px; }
     }
+
+/* 1. Container & Grid */
+.objective-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  
+  /* 2. Card Styles */
+  .objective-card {
+    position: relative;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .objective-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--primary);
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+  .objective-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  }
+  
+  /* 3. Typography */
+  .page-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .intro-text {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  .card-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.25rem;
+  }
+  .card-text {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .section-title {
+    margin: 2rem 0 1rem;
+    font-size: 1.75rem;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+  
+  /* 4. Link Styling */
+  .source-link {
+    color: var(--primary);
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+  .source-link:hover {
+    color: hsl(219,90%,50%);
+  }
+  
+  /* 5. Responsive Tweaks */
+  @media (max-width: 600px) {
+    .page-title { font-size: 2rem; }
+    .section-title { font-size: 1.5rem; }
+  }
+
+  .home-main-title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 2rem 0 1rem; /* space above/below the H1 */
+    text-align: center;  /* or left-align, your choice */
+    color: var(--text-dark);
+  }
+  
+  
