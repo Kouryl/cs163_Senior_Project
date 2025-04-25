@@ -1,25 +1,44 @@
 # pages/home.py
-from app import np, pd, go, dash, dcc, html, px, go, os
-dash.register_page(__name__, path="/") 
+import dash
+from dash import html, dcc
 
-# Home page layout with a plot
+dash.register_page(__name__, path="/")
+
 layout = html.Div([
-    html.H2("Welcome to Our Project"),
-    html.H3("Project Overview"),
-    html.P("The adoption of electric vehicles (EVs) plays a crucial role in the transition toward sustainable "
-           "transportation. In this project, we aim to examine the EV adoption trends in the Pacific Region, focusing "
-           "on growth patterns, geographic distribution, vehicle characteristics, and predictive "
-           "modeling to understand future adoption trends and their impact on the energy grid. Additionally, we will "
-           "also be exploring whether the cost of charging EVs is economically viable to replace gasoline-powered vehicles.",
-           style={'max-width': '70vw'} 
-           ),
-    html.H3("Broader Impacts"),
-    html.P("Understanding electric vehicle (EV) adoption trends enables policymakers and environmental groups to "
-           "assess the extent to which EVs contribute to reducing carbon emissions. Analyzing factors such as electric "
-           "range and Clean Alternative Fuel Vehicle (CAFV) eligibility helps evaluate the effectiveness of clean "
-           "energy policies and incentives. Additionally, identifying areas with high EV adoption provides insight into "
-           "where environmental benefits, such as reduced air pollution, are most concentrated and where further " 
-           "efforts may be needed.",
-           style={'max-width': '70vw'} )
+    # Hero Video Section
+      html.Div([
+    # 1a) video background
+        html.Video(
+        src="https://storage.googleapis.com/evenergy163.appspot.com/video/videoplayback.webm",
+        autoPlay=True, muted=True, loop=True,
+        className="hero-video"
+        ),
 
-])
+        # 1b) overlay + text/button all in the same container
+        html.Div([
+        html.H1("Discover EV Adoption Trends", className="hero-title"),
+        html.P("See how EV growth is reshaping our energy grid", className="hero-subtitle"),
+        html.A("Explore Insights", href="/EVvsGas", className="hero-cta")
+        ], className="hero-overlay")
+    ], className="hero-section"),
+
+    # Cards Section (unchanged)
+    html.Div([
+        html.Div([
+            html.H2("Project Overview", className="card-title"),
+            html.P(
+                "The adoption of electric vehicles (EVs) plays a crucial role in the transition toward sustainable transportation. "
+                "This project examines EV adoption trends in the Pacific Region and compares EV charging costs vs gasoline.",
+                className="card-text"
+            )
+        ], className="card-panel"),
+
+        html.Div([
+            html.H2("Broader Impacts", className="card-title"),
+            html.P(
+                "Understanding EV adoption helps policymakers assess carbon emission reductions and evaluate clean energy policies.",
+                className="card-text"
+            )
+        ], className="card-panel")
+    ], className="cards-container")
+], className="page-container")
