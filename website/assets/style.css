@@ -332,3 +332,125 @@ nav a:hover { color: #76c7c0; }
   color: #555;             /* optional dim color */
 }
 
+/* ── Predictions Page Styles ── */
+
+/* 1) Centered headings */
+.predictions-page .section-title,
+.predictions-page .subsection-title {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+/* 2) Intro text: left-aligned, a bit wider */
+.predictions-intro .content-text {
+  max-width: 700px;
+  margin: 0 0 2rem 0;
+  text-align: left;
+  line-height: 1.6;
+}
+
+/* 3) Two-column grid on desktop, single column on smaller */
+@media (min-width: 1024px) {
+  .predictions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    align-items: start;
+  }
+  .predictions-chart-block {
+    text-align: left;
+  }
+  .predictions-summary-block {
+    text-align: left;
+  }
+}
+@media (max-width: 1023px) {
+  .predictions-grid {
+    display: block;
+  }
+}
+
+/* 4) Chart image styling */
+.prediction-image {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* 5) Info line: centered under chart, tight margin */
+.info-text {
+  text-align: center;
+  margin: 0.25rem auto 1rem;
+  font-style: italic;
+  color: #555;
+  max-width: 700px;
+}
+
+/* 6) Content paragraphs */
+.content-text {
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* let the paragraph span the entire container */
+.full-width-text {
+  width: calc(100% - 40px);  /* leave a little side padding */
+  margin: 0 20px 2rem;       /* horizontal padding + bottom gap */
+  line-height: 1.6;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* keep your graph at full width underneath */
+.chart-graph {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.full-width-text ul {
+  margin-top: 0.5rem;
+  margin-left: 1.5rem;
+}
+
+.interpretation {
+  max-width: 800px;
+  margin: 1.5rem auto;
+  padding: 1rem 1.5rem;
+  background: #f0f8ff;
+  border-left: 4px solid var(--primary);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* Callout box for insights */
+.full-width-text.callout {
+  background-color: #f0f8ff;     /* pale blue */
+  border-left: 4px solid #2196f3; /* bright blue accent */
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+  line-height: 1.6;
+}
+
+/* Bullet list inside the callout */
+.callout ul {
+  margin: 0.5rem 0 0 1.25rem;
+}
+
+.callout ul li {
+  margin-bottom: 0.5rem;
+}
+
+/* Emphasize the bold text */
+.callout strong {
+  color: #0d47a1;
+}

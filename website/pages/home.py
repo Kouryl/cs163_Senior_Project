@@ -16,7 +16,7 @@ layout = html.Div(className="page-container", children=[
     html.Div(className="hero-section", children=[
         # 2a) background video
         html.Video(
-            src="https://storage.googleapis.com/evenergy163.appspot.com/video/Complete%20Video.mp4",
+            src="https://storage.googleapis.com/evenergy163.appspot.com/video/Complete%20Video.mp4", # https://storage.googleapis.com/evenergy163.appspot.com/video/Complete%20Video.mp4
             autoPlay=True,
             muted=True,
             loop=True,
