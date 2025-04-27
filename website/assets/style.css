@@ -1,290 +1,334 @@
-/* Dark Theme Panel */
-#page-content {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 30px;
-    background: #222;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255,255,255,0.1);
-    }
-    
-    /* Navigation */
-    nav {
-        position: relative;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        background-color: var(--primary);
-        padding: 20px 0;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        z-index: 1000;  /* keep it above everything */
-        font-family: 'Roboto', sans-serif; /* if you’re using Roboto here */
-      }
-      
-      nav a {
-        font-size: 18px;                  /* larger text */
-        color: #1b1b1b;
-        font-weight: bold;
-        margin: 0 16px;                   /* spacing between items */
-        text-decoration: none;
-      }
-      
-      nav a:hover {
-        color: #76c7c0;
-      }
-    
-    /* Headings */
-    h1 {
-    font-size: 36px;
-    font-weight: bold;
-    color: #000;
-    margin: 0 0 25px 10px;
-    }
-    h2 {
-    font-size: 28px;
-    font-weight: bold;
-    color: #000;
-    margin-left: 20px;
-    }
-    h3 {
-    font-size: 24px;
-    font-weight: bold;
-    color: #000;
-    margin-left: 40px;
-    }
-    
-    /* Text & Links */
-    p {
-    font-size: 18px;
-    line-height: 1.6;
-    color: #202020;
-    margin-left: 60px;
-    }
-    a {
-    color: #1b6bff;
-    text-decoration: none;
-    }
-    a:hover {
-    color: #ff8c00;
-    }
-    
-    div { margin-top: 20px; }
-    
-    /* Page Container */
-    .page-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-    }
-    
-    /* Hero Section (Image/Video) */
-    .hero-section {
-        position: relative;
-        width: 100vw;
-        height: 90vh;               /* whatever height you prefer */
-        margin-left: calc(-50vw + 50%);
-        overflow: hidden;
-        background: none;
-        margin-top: -2px;
-      }
+/*─────────────────────────────────*/
+/* 0. Root variables & Base reset  */
+/*─────────────────────────────────*/
+:root {
+  --primary: hsl(219, 100%, 63%);
+  --bg-light: #f5f5f5;
+  --text-light: #ffffff;
+  --text-dark: #212529;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+}
 
-      .hero-video {
-        position: absolute;
-        top: 0; 
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;          /* crop and cover */
-        z-index: 1;
-      }
-      .hero-overlay {
-        position: absolute;
-        top: 0; 
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.4);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        text-align: center;
-        pointer-events: none;
-        z-index: 2;
-      }
-    .hero-content {
-    position: relative;
-    z-index: 1;
-    max-width: 800px;
-    padding: 0 20px;
-    text-align: center;
-    }
-    .hero-title {
-    font-size: 3rem;
-    font-weight: 700;
-    color: var(--text-light);
-    margin: 0;
-    color: #ffffff !important;
-    }
-    .hero-subtitle {
-    font-size: 1.5rem;
-    color: var(--text-light);
-    margin: 10px 0 20px;
-    color: #ffffff !important;
-    }
-    .hero-cta {
-        display: inline-block;
-        padding: 12px 24px;
-        background-color: rgba(255, 255, 255, 0.85);  /* almost-white */
-        color: var(--primary);                         /* blue text */
-        border: 2px solid var(--primary);
-        border-radius: 4px;
-        text-decoration: none;
-        font-weight: 600;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);      /* pop-out shadow */
-        cursor: pointer;
-        transition: 
-          background-color 0.2s, 
-          color 0.2s, 
-          transform 0.2s, 
-          box-shadow 0.2s;
-        pointer-events: auto;
-      }
-      
-      .hero-cta:hover {
-        background-color: var(--primary);               /* full blue */
-        color: #fff;                                    /* white text */
-        transform: scale(1.05);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
-      }
-      
-    
-    /* Cards */
-    .cards-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin: 40px 0;
-    }
-    
-    .card-panel {
-        flex: 1 1 300px;
-        background-color: #e0e0e0 !important;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        transition: box-shadow 0.2s ease, transform 0.2s ease;
-    }
-    
-    .card-panel:hover {
-        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        transform: translateY(-4px);
-    }
-    
-    .card-title {
-        font-size: 1.75rem;
-        margin-bottom: 12px;
-    }
-    
-    .card-text {
-        font-size: 1rem;
-        line-height: 1.6;
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-    #page-content { margin: 10px; }
-    .hero-title { font-size: 2.5rem; }
-    .hero-subtitle { font-size: 1.25rem; }
-    p, h1, h2, h3 { margin: 0 10px; }
-    }
+/*─────────────────────────────────*/
+/* 1. Global Navigation            */
+/*─────────────────────────────────*/
+nav {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background-color: var(--primary);
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-family: 'Roboto', sans-serif;
+  z-index: 1000;
+}
+nav a {
+  font-size: 18px;
+  color: #1b1b1b;
+  font-weight: bold;
+  margin: 0 16px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+nav a:hover { color: #76c7c0; }
 
-/* 1. Container & Grid */
+/*─────────────────────────────────*/
+/* 2. Page Container (all pages)  */
+/*─────────────────────────────────*/
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/*─────────────────────────────────*/
+/* 3. Home Page Hero & Cards      */
+/*─────────────────────────────────*/
+.hero-section {
+  position: relative;
+  width: 100vw; height: 90vh;
+  margin-left: calc(-50vw + 50%);
+  margin-top: -2px; /* nudge under nav */
+  overflow: hidden;
+}
+.hero-video {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; z-index: 1;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1rem; text-align: center;
+  z-index: 2;
+}
+.home-main-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 3rem; font-weight: 700;
+  margin: 2rem 0 1rem;
+  text-align: center; color: var(--text-dark);
+}
+.hero-title {
+  font-size: 3rem; font-weight: 700;
+  color: #fff !important; margin: 0;
+}
+.hero-subtitle {
+  font-size: 1.5rem; color: #fff !important;
+  margin: 0;
+}
+.hero-cta {
+  padding: 12px 24px;
+  background-color: rgba(255,255,255,0.85);
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  pointer-events: auto;
+}
+.hero-cta:hover {
+  background-color: var(--primary);
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.35);
+}
+.cards-container {
+  display: flex; flex-wrap: wrap; gap: 20px; margin: 40px 0;
+}
+.card-panel {
+  flex: 1 1 300px;
+  background-color: #e0e0e0;
+  padding: 20px; border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.card-panel:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+.card-title { font-size: 1.75rem; margin-bottom:12px; }
+.card-text { font-size:1rem; line-height:1.6; }
+
+/*─────────────────────────────────*/
+/* 4. Objective Page Styles        */
+/*─────────────────────────────────*/
+.page-container.objective-page {
+  background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+  padding: 2rem 0;
+}
 .objective-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin: 2rem 0;
-  }
-  
-  /* 2. Card Styles */
-  .objective-card {
-    position: relative;
-    background: #e3f2fd;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .objective-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 4px; height: 100%;
-    background: var(--primary);
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-  }
-  .objective-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-  }
-  
-  /* 3. Typography */
-  .page-title {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-  }
-  .intro-text {
-    font-size: 1.125rem;
-    margin-left: 0rem;
-    margin-bottom: 1.5rem;
-    color: #333;
-  }
-  .card-title {
-    margin: 0 0 0.75rem 0;
-    font-size: 1.25rem;
-  }
-  .card-text {
-    margin: 0;
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-  .section-title {
-    margin: 2rem 0 1rem;
-    font-size: 1.75rem;
-  }
-  .section-divider {
-    border: none;
-    border-top: 1px solid #ddd;
-  }
-  
-  /* 4. Link Styling */
-  .source-link {
-    color: var(--primary);
-    text-decoration: underline;
-    transition: color 0.2s;
-  }
-  .source-link:hover {
-    color: hsl(219,90%,50%);
-  }
-  
-  /* 5. Responsive Tweaks */
-  @media (max-width: 600px) {
-    .page-title { font-size: 2rem; }
-    .section-title { font-size: 1.5rem; }
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+.objective-card {
+  position: relative;
+  background: #e3f2fd;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.objective-card::before {
+  content: ""; position: absolute; top:0; left:0;
+  width:4px; height:100%; background: var(--primary);
+  border-top-left-radius:8px; border-bottom-left-radius:8px;
+}
+.objective-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+.section-title { margin:2rem 0 1rem; font-size:1.75rem; }
+.intro-text { font-size:1.125rem; margin-bottom:1.5rem; }
 
-  .home-main-title {
-    font-family: 'Roboto', sans-serif;
-    font-size: 3rem;
-    font-weight: 700;
-    margin: 2rem 0 1rem; /* space above/below the H1 */
-    text-align: center;  /* or left-align, your choice */
-    color: var(--text-dark);
+/*─────────────────────────────────*/
+/* 5. Methods Page Styles          */
+/*─────────────────────────────────*/
+.page-container.methods-page {
+  background: #fafafa;
+  padding: 2rem 0;
+}
+.content-panel {
+  max-width: 900px;
+  margin: -60px auto 2rem;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+.subsection-title {
+  margin: 2rem 0 1rem;
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+.section-divider {
+  border: none; height:2px; background:#ddd;
+  margin:1rem 0 2rem;
+}
+.methods-icon-grid {
+  display:flex; flex-wrap:wrap; gap:2rem;
+  justify-content:space-between;
+}
+.method-icon-card {
+  flex:1 1 280px; text-align:center;
+  background:#fff; border-radius:8px;
+  padding:1.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.method-icon-card:hover {
+  transform:translateY(-4px);
+  box-shadow:0 6px 16px rgba(0,0,0,0.1);
+}
+.method-icon { width:48px; height:48px; margin-bottom:1rem; }
+.method-title { font-size:1.25rem; margin:0.5rem 0; color:var(--text-dark); }
+.method-text {
+  color:#555; line-height:1.6; opacity:0.85;
+  transition: opacity 0.2s;
+}
+.method-icon-card:hover .method-text { opacity:1; }
+
+/*─────────────────────────────────*/
+/* 6. Responsive Overrides         */
+/*─────────────────────────────────*/
+@media (max-width: 768px) {
+  .hero-title { font-size:2.5rem; }
+  .hero-subtitle { font-size:1.25rem; }
+  .cards-container,
+  .methods-icon-grid,
+  .objective-container { grid-template-columns: 1fr; flex-direction: column; }
+}
+
+/* EV vs Gas page overrides */
+.page-container.evvsgas-page {
+  background: #fff;            /* plain white */
+  padding: 2rem 0;             /* top/bottom breathing room */
+}
+.evvsgas-page .section-title {
+  margin-top: 2rem;
+  text-align: center;
+}
+.evvsgas-page .subsection-title {
+  margin: 1.5rem 0 0.5rem;
+  margin-left: 1rem;           /* or whatever indentation you prefer */
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+.evvsgas-page .content-text {
+  margin: 0 1rem 1rem 1rem;
+  font-size: 1rem; line-height: 1.6;
+}
+.evvsgas-page .chart-graph {
+  margin: 0 auto 2rem;
+  max-width: 90%;
+}
+.evvsgas-page .interactive-section {
+  margin: 2rem 0;
+}
+.evvsgas-page .forecast-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+.evvsgas-page .forecast-image {
+  max-width: 50%;
+  height: auto;
+}
+.evvsgas-page .conclusions-list {
+  margin: 0 2rem 2rem;
+  list-style-type: disc;
+  line-height: 1.6;
+}
+
+/* ── Findings Page ── */
+.findings-page .section-title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.findings-subtitle {
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
+  color: var(--primary);
+}
+.findings-section {
+  margin-bottom: 2.5rem;
+}
+.findings-media {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+.findings-image {
+  flex: 1 1 300px;
+  max-width: 45%;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+.findings-text {
+  flex: 1 1 300px;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  padding: 0.5rem;
+}
+@media (max-width: 1024px) {
+  .findings-media {
+    flex-direction: column;
   }
-  
-  
+  .findings-image, .findings-text {
+    max-width: 100%;
+  }
+}
+
+/* =============================================================================
+   Find­ings Page Media Rules
+   ============================================================================= */
+
+/* wrap each image block so it can center and add some breathing room */
+.media-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* FULL-WIDTH images (EV Sales, combined plots, heatmap, etc.) */
+.full-image {
+  display: block;           /* centerable */
+  max-width: 800px;         /* never wider than 800px */
+  width: 100%;              /* but shrink down on smaller screens */
+  height: auto;             /* preserve aspect ratio */
+  margin: 0 auto;           /* horizontal center */
+}
+
+/* HALF-WIDTH images (side-by-side pairs) */
+.half-image {
+  flex: 1 1 50%;     /* now they can each take up 48% of the row */
+  max-width: 700px;  /* allow them to grow up to 500px wide */
+  width: 100%;
+  height: auto;
+  margin: 0 1rem;
+}
+
+/* Info lines under findings graphs */
+.info-text {
+  text-align: center;      /* center the line */
+  margin: 0.5rem auto 1rem;/* 0.5rem above, 1rem below, auto left/right */
+  max-width: 800px;        /* cap the width if you like */
+  font-style: italic;      /* optional styling */
+  color: #555;             /* optional dim color */
+}
+
