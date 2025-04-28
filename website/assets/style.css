@@ -159,6 +159,7 @@ nav a:hover { color: #76c7c0; }
   background: #fafafa;
   padding: 2rem 0;
 }
+
 .content-panel {
   max-width: 900px;
   margin: -60px auto 2rem;
@@ -167,47 +168,80 @@ nav a:hover { color: #76c7c0; }
   border-radius: 8px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.05);
 }
+
 .subsection-title {
   margin: 2rem 0 1rem;
   font-size: 1.5rem;
   color: var(--primary);
 }
+
 .section-divider {
-  border: none; height:2px; background:#ddd;
-  margin:1rem 0 2rem;
+  border: none;
+  height: 2px;
+  background: #ddd;
+  margin: 1rem 0 2rem;
 }
+
+/* 3-column grid, min 350px each, max width 1200px */
 .methods-icon-grid {
-  display:flex; flex-wrap:wrap; gap:2rem;
-  justify-content:space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
+
 .method-icon-card {
-  flex:1 1 280px; text-align:center;
-  background:#fff; border-radius:8px;
-  padding:1.5rem; box-shadow:0 2px 8px rgba(0,0,0,0.05);
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center; /* icon & title centered */
 }
+
 .method-icon-card:hover {
-  transform:translateY(-4px);
-  box-shadow:0 6px 16px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
 }
-.method-icon { width:48px; height:48px; margin-bottom:1rem; }
-.method-title { font-size:1.25rem; margin:0.5rem 0; color:var(--text-dark); }
+
+.method-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 1rem;
+}
+
+.method-title {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+  color: var(--text-dark);
+}
+
+/* narrower, left-aligned paragraphs for readability */
 .method-text {
-  color:#555; line-height:1.6; opacity:0.85;
+  max-width: none;
+  margin: 0.5rem 0;  
+  text-align: left;
+  color: #555;
+  line-height: 1.5;
+  opacity: 0.85;
   transition: opacity 0.2s;
 }
-.method-icon-card:hover .method-text { opacity:1; }
+
+.method-icon-card:hover .method-text {
+  opacity: 1;
+}
 
 /*─────────────────────────────────*/
 /* 6. Responsive Overrides         */
 /*─────────────────────────────────*/
 @media (max-width: 768px) {
-  .hero-title { font-size:2.5rem; }
-  .hero-subtitle { font-size:1.25rem; }
-  .cards-container,
-  .methods-icon-grid,
-  .objective-container { grid-template-columns: 1fr; flex-direction: column; }
+  .methods-icon-grid {
+    grid-template-columns: 1fr; /* stack into one column on tablets/mobiles */
+  }
 }
+
 
 /* EV vs Gas page overrides */
 .page-container.evvsgas-page {

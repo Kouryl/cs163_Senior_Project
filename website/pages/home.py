@@ -16,7 +16,7 @@ layout = html.Div(className="page-container", children=[
     html.Div(className="hero-section", children=[
         # 2a) background video
         html.Video(
-            src="https://storage.googleapis.com/evenergy163.appspot.com/video/Complete%20Video.mp4", # https://storage.googleapis.com/evenergy163.appspot.com/video/Complete%20Video.mp4
+            src="", # https://storage.googleapis.com/evenergy163.appspot.com/video/Complete%20Video.mp4
             autoPlay=True,
             muted=True,
             loop=True,
@@ -46,18 +46,37 @@ layout = html.Div(className="page-container", children=[
             )
         ]),
 
-        html.Div(className="card-panel",
-            style={'backgroundColor': '#e0e0e0'},
-            children=[
-            html.H2("Broader Impacts", className="card-title"),
-            html.Div(
-                "Understanding EV adoption helps policymakers and environmental groups assess the extent to which EVs "
-                "reduce carbon emissions and evaluate the effectiveness of clean energy policies and incentives. "
-                "Identifying areas with high EV adoption provides insight into where environmental benefits such as "
-                "reduced air pollution are most concentrated and where further efforts may be needed.",
-                className="card-text",
-                style={'marginLeft': '0px', 'marginRight': '20px'}
-            )
-        ]),
+        html.Div(
+    className="card-panel",
+    style={'backgroundColor': '#e0e0e0'},
+    children=[
+        html.H2("Broader Impacts", className="card-title"),
+
+        # Use a bullet list to make each impact stand out
+                html.Ul(
+                    className="card-text",
+                    style={'marginLeft': '0', 'marginRight': '20px', 'paddingLeft': '1.2em'},
+                    children=[
+                        html.Li([
+                            html.Strong("Grid & Infrastructure Planning:"), 
+                            " By mapping EV charging growth and producing 5-year load forecasts, utilities can pinpoint which regions and seasons will see the biggest spikes in electricity demand. That lets them schedule substation upgrades, reinforce distribution feeders, or deploy smart‐charging programs before localized outages or voltage issues emerge."
+                        ]),
+                        html.Li([
+                            html.Strong("Targeted Policy & Incentives:"), 
+                            " Our cost-per-mile analysis shows EVs are already cheaper to run than gasoline in most months. Policymakers can use that insight to shift subsidies away from blanket purchase rebates toward targeted programs—like workplace charging credits in areas where economic advantage alone hasn’t driven high uptake."
+                        ]),
+                        html.Li([
+                            html.Strong("Dynamic Rate Design:"), 
+                            " The short-term volatility study demonstrates that electric rates fluctuate differently from gas prices. Regulators and utilities can design time-of-use or demand-charge structures that encourage off-peak EV charging, flattening daily load profiles and lowering wholesale market risks."
+                        ]),
+                        html.Li([
+                            html.Strong("Environmental Equity:"), 
+                            " Geographic “hot spot” maps of EV adoption highlight neighborhoods where air-quality benefits from tail-pipe reduction will be greatest and where they may still lag behind. That helps environmental agencies prioritize outreach and charging infrastructure in underserved communities, ensuring the health gains of electrification reach everyone."
+                        ]),
+                    ]
+                )
+            ]
+        ),
+
     ])
 ])
