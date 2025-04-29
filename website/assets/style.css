@@ -488,3 +488,26 @@ nav a:hover { color: #76c7c0; }
 .callout strong {
   color: #0d47a1;
 }
+
+.overview-panel, .impacts-panel {
+  background: #f5f5f5;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.overview-list, .impacts-list {
+  margin: 1rem 0 0 1.2rem;
+  padding: 0;
+  margin-left: 1.2rem;
+}
+.impacts-list li {
+  margin-bottom: 0.75rem;
+}
+.impacts-list strong {
+  color: var(--primary);
+}
+
+.overview-list li,
+.impacts-list li {
+  margin-bottom: 0.75rem;
+}
