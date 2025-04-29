@@ -298,7 +298,54 @@ The electric rate forecast shows clear annual peaks and an overall upward trend 
             className='full-width-text'
         )
     ]),
-
+    
+        # ── 2024 Back‐Test Comparisons ──
+    
+    # ── Gas back‐test ──
+html.H4('Gas Price Forecast vs Actual — 2024 Back-Test', className='subsection-title'),
+html.Div(
+    className='forecast-container',
+    style={'display': 'flex', 'alignItems': 'flex-start', 'gap': '2rem'},
+    children=[
+        html.Img(
+            src='https://storage.googleapis.com/evenergy163.appspot.com/results/download%20(71).png',
+            className='forecast-image',
+            style={'flex': '1 1 60%'}
+        ),
+        html.Ul(
+            className='backtest-points',
+            style={'flex': '1 1 40%', 'margin': 0, 'paddingLeft': '1rem'},
+            children=[
+                html.Li("Dashed red line generally overestimates actual gas prices, especially during summer months."),
+                html.Li("Model captures spring rise but underestimates mid-year price dips caused by market shocks."),
+                html.Li("MAE ≈ $0.55/gal (≈11% error) — acceptable for long-term budgeting but too coarse for monthly planning."),
+            ]
+        )
+    ]
+),
+    
+    # ── Electric back‐test ──
+html.H4('Electric Rate Forecast vs Actual — 2024 Back-Test', className='subsection-title'),
+html.Div(
+    className='forecast-container',
+    style={'display': 'flex', 'alignItems': 'flex-start', 'gap': '2rem'},
+    children=[
+        html.Img(
+            src='https://storage.googleapis.com/evenergy163.appspot.com/results/download%20(72).png',
+            className='forecast-image',
+            style={'flex': '1 1 60%'}
+        ),
+        html.Ul(
+            className='backtest-points',
+            style={'flex': '1 1 40%', 'margin': 0, 'paddingLeft': '1rem'},
+            children=[
+                html.Li("Dashed red line closely follows the actual electric rates, with only small timing shifts."),
+                html.Li("Model captures both the mid-year spike and late-year dip, though it smooths out some volatility."),
+                html.Li("MAE ≈ $0.02/kWh (<8% error) — strong performance for both budget forecasting and operational planning."),
+            ]
+        )
+    ]
+),
 
     # Conclusions
     html.H3('Overall Takeaways & Next Steps', className='subsection-title'),
