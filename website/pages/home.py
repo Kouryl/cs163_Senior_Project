@@ -7,7 +7,7 @@ dash.register_page(__name__, path="/")
 layout = html.Div(className="page-container", children=[
 
     html.H1(
-        "EV Adoption Impact on the Energy Infrastructure",
+        "EV Growth and Its Effect on Charging Demand",
         className="home-main-title"
     ),
 
