@@ -37,77 +37,47 @@ html.Div(className="findings-section", children=[
     html.H3("United States EV Energy History", className="subsection-title"),
     html.Div(className="media-wrapper", children=[
         html.Img(
-            src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/global%20energy%20usage%20history.png",
+            src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/april29-results/US_energy_usage_growth.png",
             className="half-image"
         ),
         html.Img(
-            src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/global%20charging%20session%20history.png",
+            src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/april29-results/US_charging_session_growth.png",
             className="half-image"
         )
     ]),
     html.Div(className="findings-text", children=[
-        "Summary: The left plot shows energy usage history; the right plot shows charging session history."
+        "Summary: The left plot shows energy usage history; the right plot shows charging session history. "
+        "Both charging session and energy usage are increasing linearly over time for all regions combined in the USA. "
+        "The monthly growth rate of energy usage on avg is 5.45% per month, while the monthly growth for charging sessions is 4.88%."
     ]),
-
-# Combined plot with title *above* the graph
-html.Div(
-    className="media-wrapper",
-    style={'flexDirection': 'column'},
-    children=[
-        html.H4(
-            "Charging Sessions vs. Energy Usage Over Time",
-            className="subsection-title",
-            style={'marginBottom': '1rem', 'textAlign': 'left'}
-        ),
-        html.Img(
-            src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/global%20charging%20session%20and%20energy%20usage%20history.png",
-            className="full-image"
-        )
-    ]
-),
-html.Div(
-    className="findings-text",
-    children=[
-        "Summary: This plot compares the energy usage and charging session history. "
-           "Though they look similar in the 2 plots above, the amount of energy usage is "
-           "much higher than the amount of charging sessions. We can see that the energy "
-           "usage has increased. Using a linear regression model, we found both charging sessions "
-           "and energy usage has an linear growth (confirmed by linear regression with r2 score of 0.902 "
-           "and 0.909 respectively). Charging sessions had an avg monthly growth rate of 35.61% while energy increased "
-           "by 41.71% each month."
-    ]
-),
-
-
 ]),
     # 3) Pacific region analysis
     html.Div(className="findings-section", children=[
 
-        html.H3("Further Analysis in the Pacific Region", className="subsection-title"),
-
-        # Chart
-        html.Div(className="media-wrapper", children=[
-            html.Img(
-                src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/pacific_results/pacific_charging_and_energy_usage.png",
-                className="full-image"
-            )
-        ]),
-
+        html.H3("Further Analysis With Focus on the Pacific Region", className="subsection-title"),
         # Centered Info line, tight to the chart
         html.P(
             "(Info: History of charging sessions and energy usage in the Pacific region.)",
             className="info-text"
         ),
-
+        html.Div(className="media-wrapper", children=[
+        html.Img(
+            src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/april29-results/Pacific_energy_usage_growth.png",
+            className="half-image"
+        ),
+        html.Img(
+            src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/april29-results/Pacific_charging_session_growth.png",
+            className="half-image"
+        )
+    ]),
         # Summary text
         html.Div(className="findings-text", children=[
             "Summary: This plot focuses on comparing charging sessions and energy usage in the Pacific region. "
             "Something interesting we found, is that the pacific region has an exponential growth rate, where the exponential "
-            "model has an r2 score of 0.9, compared to the linear model with an r2 score of 0.8. This means that the exponential model "
-            "fitted better than the linear regression model. While the monthly growth rates we got for charging was around 2.59% and 3.51% "
-            "for energy usage."
+            "model fitted better than linear with a r2 score of 0.952 for energy usage and 0.904 for sessions. This suggest that the pacific region "
+            "is experiencing exponential growth in usage and sessions. While the monthly growth rates we got for charging sessions was approximately "
+            "3.86% and 4.37% for energy usage on avg."
         ])
-
     ]),
 
 
@@ -119,7 +89,7 @@ html.Div(className="findings-section", children=[
     # 4a) Top locations bar chart
     html.Div(className="media-wrapper", children=[
         html.Img(
-            src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/pacific_results/pacific_top_charging_locations.png",
+            src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/april29-results/pacific_popular_locations.png",
             className="full-image"
         )
     ]),
@@ -128,31 +98,28 @@ html.Div(className="findings-section", children=[
         className="info-text"
     ),
     html.Div(className="findings-text", children=[
-        "Summary: The plot shows that the amount of charging session is increasing over time. "
-           "This can highlight the most popular charging locations in the Pacific region. "
-           "We can see that the most popular location at the end of 2022 is around the oregon and "
-           "washington area in portland-vancouvr-hillsboro. The second most popular location however "
-           "is undesigned, which meant the location was obscured for anonymization purposes. But in general," 
-           "according to the dataset dictionary, they are not metro areas or areas with to few charging stations. "
+        "Summary: This plot shows the top charging locations in the pacific region. "
+        "We can see that over time, Portland-Vancouver-Hillsboro is the most popular location, "
+        "comparing the growth rates, we found that Portland-Vancouver-Hillsboro, Seatle-Tacoma-Bellevue, and Salem has "
+        "exponential trend, while Los Angeles-Long Beach-Anaheim has a linear trend. Avg monthly growth rates in the plot."
     ]),
 
     # 4b) Heatmap of top areas
     html.Div(className="media-wrapper", children=[
         html.Img(
-            src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/pacific_results/pacific_heatmap_top_areas.png",
+            src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/april29-results/OR_WA_heatmap.png",
             className="full-image"
         )
     ]),
     html.P(
-        "(Info: Heatmap of usage over time.)",
+        "(Info: Heatmap visualization of growth.)",
         className="info-text"
     ),
     html.Div(className="findings-text", children=[
-        "Summary: The heatmap shows us over time how much each location charging station usage is increasing or decreasing. "
-           "Going down the y-axis, we can closer to the present, we can see the areas get more and more charging records. "
-           "(Note): Portland-Vancouver-Hillsboro had an avg monthly growth rate of 3.17% for charging sessions, when comparing linear "
-           "and exponential models, the exponential model had an r2 score of 0.858, while the linear model had an r2 score of 0.744. "
-           "meaning the exponential model fitted better than the linear regression model. "
+        "Summary: The heatmap is just used as another visualization to show growth, here we chose the top location. "
+        "The heatmap focuses on Portland-Vancouver-Hillsboro, which are areas in Oregon and Washington. "
+        "Y-axis is YYYY-MM, and x-axis is location, we see that around the end of 2021, the growth rate begins to increase significantly. "
+        "This area had exponential growth with a fit of 0.86 r2 score, and avg monthly growth rate of 4.8%"
     ])
 
 ]),
