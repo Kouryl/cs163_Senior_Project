@@ -80,20 +80,6 @@ layout = html.Div(
                 className="methods-icon-grid",
                 children=[
 
-                    # Descriptive Statistics
-                    html.Div(className="method-icon-card", children=[
-                        html.Img(
-                            src="https://storage.googleapis.com/evenergy163.appspot.com/icons/statistics_2672346.png",
-                            className="method-icon"
-                        ),
-                        html.H3("Descriptive Stats", className="method-title"),
-                        html.P(
-                            "We computed key summary metrics such as mean, median, standard deviation and skew for both sessions and energy usage. "
-                            "These stats quantify central tendencies and dispersion, helping us understand typical user behavior and identify outliers.",
-                            className="method-text"
-                        )
-                    ]),
-
                     # Cost Analysis
                     html.Div(className="method-icon-card", children=[
                         html.Img(
@@ -144,7 +130,7 @@ layout = html.Div(
                         html.H3("Correlation Analysis", className="method-title"),
                         html.P(
                                 "We standardized both price series (gas $/gallon and electric $/kWh) into z-scores, then computed the Pearson correlation coefficient (r). "
-                                "This tells us how closely the two series move together over time—if one goes up, does the other tend to follow? "
+                                "This tells us how closely the two series move together over time whether if one goes up, does the other tend to follow? "
                                 "A value near +1 means strong co-movement, providing evidence of shared economic drivers.",
                             className="method-text"
                         )
@@ -175,7 +161,7 @@ layout = html.Div(
                     ]),
                     #Linear Growth Rate
                     html.Div(className="method-icon-card", children=[
-                        #html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/icons/forecasting.png", className="method-icon"),
+                        html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/icons/spectrum_2938677.png", className="method-icon"),
                         html.H3("Linear Growth Rate", className="method-title"),
                         html.P(
                             "We calculated the monthly growth rate for linear trends by using the formula: linear-coeff or slope * 30 days, "
@@ -186,7 +172,7 @@ layout = html.Div(
 
                     # Exponential Growth Rate
                     html.Div(className="method-icon-card", children=[
-                        #html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/icons/forecasting.png", className="method-icon"),
+                        html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/icons/business_13867188.png", className="method-icon"),
                         html.H3("Exponential Growth Rate", className="method-title"),
                         html.P(
                             "We calculated the exponential monthly growth rate by using the formula: (exp(coef) - 1) * 100, "

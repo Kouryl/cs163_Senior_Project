@@ -7,7 +7,7 @@ dash.register_page(__name__, path="/")
 layout = html.Div(className="page-container", children=[
 
     html.H1(
-        "EV Growth and Its Effect on Charging Demand",
+        "EV Growth and Its Effect on Energy Demand",
         className="home-main-title"
     ),
 
@@ -30,11 +30,12 @@ layout = html.Div(className="page-container", children=[
         html.Div(className="card-panel", children=[
             html.H2("Project Overview", className="card-title"),
             html.Div(
-                "The adoption of electric vehicles (EVs) plays a crucial role in the transition toward sustainable transportation. "
-                "In this project, we analyzed EV charging sessions and kWh delivered across the Pacific Region to identify growth patterns, "
-                "geographic hotspots, and key vehicle characteristics. We then translated historical energy and gasoline prices into a common "
-                "cost-per-mile metric—allowing a direct comparison of EV charging vs. fuel costs—and built 5-year time-series forecasts to "
-                "project future demand on the energy grid.",
+                    "We analyzed monthly EV charging sessions and energy delivered across Pacific-region metros "
+                    "to uncover growth trends and seasonal cycles. Historical gasoline and electricity rates were "
+                    "converted into a common cost-per-mile metric to compare operating costs, and we examined both "
+                    "their short-term volatility and long-term co-movement. We then used 39 months of historical "
+                    "energy data to forecast next year’s Pacific-region electricity demand using Facebook Prophet, "
+                    "which handles non-stationary seasonal patterns.",
                 className="card-text"
             )
         ]),
@@ -44,10 +45,9 @@ layout = html.Div(className="page-container", children=[
             html.H2("Broader Impacts", className="card-title"),
             html.Div(
                 "Understanding EV adoption trends enables utilities and policymakers to assess energy demand on local distribution networks, "
-                "guiding upgrades to substations, feeders, and fast-charging stations. Our geographic hotspot analysis and 5-year load forecasts "
-                "pinpoint where EV charging growth will stress the grid the most. Converting to a common cost-per-mile metric also helps design "
-                "targeted incentives and time-of-use rates to shift charging off-peak, smoothing daily load profiles. These findings lay the "
-                "groundwork for follow-on work in tariff design, renewable integration, and optimized charging strategies.",
+                "guiding upgrades to substations, feeders, and fast-charging stations. Metro‐area growth maps reveal which Pacific-region corridors will "
+                "experience the fastest EV uptake, guiding strategic placement of new fast-charging stations. Five-year forecasts of energy prices "
+                "could allow a more accurate budget setting, hedging strategies, and investment timing.",
                 className="card-text"
             )
         ])

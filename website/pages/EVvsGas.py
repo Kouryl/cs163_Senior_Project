@@ -232,7 +232,7 @@ We’ll address that by converting to **cost per mile** in Section 2.
     - **Electric Rate Change:** {mean_elec_change:.2f}% per month  
     - **Monthly correlation:** r = {corr_rate:.2f}, essentially zero.  
 
-    This tells us that short-run price swings are driven by distinct factors (weather, seasonal demand, supply disruptions). A unified long-term strategy must still accommodate separate risk profiles for each market.
+    This tells us that short-run price swings are driven by distinct factors (weather, seasonal demand, supply disruptions).
     """, className='interpretation'),
 
 
@@ -351,16 +351,16 @@ html.Div(
     html.H3('Overall Takeaways & Next Steps', className='subsection-title'),
     html.Ul(className='conclusions-list', children=[
         html.Li(
-            "Charging an EV costs about $0.04 per mile, compared to around $0.12 per mile for gasoline cars so EVs save you money every mile."
+            "Charging an EV runs about $0.04/mi versus $0.12/mi for a typical gasoline car, so you save roughly $0.08 each mile."
         ),
         html.Li(
-            "Even if you pay peak electricity rates or lose about 10% charging efficiency, EVs are still cheaper to run than gas cars."
+            "Even under worst-case conditions (peak kWh rates, 10% charging losses, or low EV efficiency), EVs remain at least 50% cheaper per mile."
         ),
         html.Li(
-            "Adding in a small monthly charge for a home charger and lower maintenance, total EV ownership remains about 25% less expensive than a gas car."
+            "Our 5-year forecasts show both gas prices and electric rates rising steadily through 2030, with electric rates climbing slightly faster—yet EVs retain their cost advantage per mile."
         ),
         html.Li(
-            "Next, we should look at public charger fees and regional rate differences to make our cost estimates even more accurate."
+            "Incorporate public-charger fees and regional rate structures to refine total operating-cost estimates."
         )
     ])
 ])
