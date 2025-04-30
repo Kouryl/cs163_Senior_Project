@@ -14,7 +14,7 @@ layout = html.Div(className="page-container findings-page", children=[
         html.H3("EV Sales in USA (IEA)", className="subsection-title"),
         html.Div(className="media-wrapper", children=[
             html.Img(
-                src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/EV_sales_USA_2010-2023IEA.png",
+                src="https://storage.googleapis.com/evenergy163.appspot.com/new_results/april29-results/ev_sales.png",
                 className="full-image"
             ),
             html.Div(className="findings-text", children=[
@@ -25,7 +25,9 @@ layout = html.Div(className="page-container findings-page", children=[
                     target="_blank",
                     className="source-link"
                 ),
-                ", we can see that the number of EV sales has grown exponentially over the years in the USA."
+                ", we used linear regression model to test if linear or exponential, and found that the "
+                "trend for EV sales in the USA is exponential with a r2 score of 0.875 compared to linear of 0.714. "
+                "The annual growth rate was 46.8% a year or 3.25% a month"
             ])
         ])
     ]),
