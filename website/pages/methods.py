@@ -32,7 +32,7 @@ layout = html.Div(
                         ),
                         html.H3("Time Series", className="method-title"),
                         html.P(
-                            "We grouped every charging session and kWh delivered by calendar month to reveal overall trends, "
+                            "We took the count of charging sessions and grouped energy (kWh) delivered by calendar month to reveal overall trends, "
                             "seasonality (e.g. summer peaks), and long-term shifts in EV energy demand. This aggregation lays the "
                             "foundation for all subsequent analyses and forecasting.",
                             className="method-text"
@@ -62,8 +62,9 @@ layout = html.Div(
                         ),
                         html.H3("Heatmaps", className="method-title"),
                         html.P(
-                            "We plotted charging activity by region and month on a calendar-style heatmap to highlight geographic “hot spots.” "
-                            "This reveals which areas have the fastest adoption and where demand is most concentrated at different times of year.",
+                            "We filtered the data to the pacific region, and then used a line plot to find the most popular locations. "
+                            "Next, we use heatmap to visualize the growth of the top locations over time. This is just another way to visualize "
+                            "growth in popular areas.",
                             className="method-text"
                         )
                     ]),
@@ -131,8 +132,8 @@ layout = html.Div(
                         ),
                         html.H3("Geo Analysis", className="method-title"),
                         html.P(
-                            "Using geographic coordinates, we mapped session counts and kWh usage across charging stations to uncover regional adoption "
-                            "patterns. This spatial analysis highlights areas where infrastructure may need expansion to meet growing EV demand.",
+                            "Using the regions column on the dataset, we did a charging session count and aggregation for energy (kWh) usage on the pacific region to uncover EV growth "
+                            "patterns. This spatial analysis highlights metro areas monthly growth rates, and where infrastructure may need expansion to meet growing EV demand.",
                             className="method-text"
                         )
                     ]),
@@ -169,6 +170,39 @@ layout = html.Div(
                             "We used Facebook Prophet, a model designed for time-series data with strong seasonality—to forecast the next five years of prices. "
                             "Prophet automatically detects yearly patterns (peaks/troughs) and fits a trend line, giving us projected trajectories plus confidence intervals. "
                             "This helps us anticipate future cost pressures and the evolving gap between gas and electricity.",
+                            className="method-text"
+                        )
+                    ]),
+                    #Linear Growth Rate
+                    html.Div(className="method-icon-card", children=[
+                        #html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/icons/forecasting.png", className="method-icon"),
+                        html.H3("Linear Growth Rate", className="method-title"),
+                        html.P(
+                            "We calculated the monthly growth rate for linear trends by using the formula: linear-coeff or slope * 30 days, "
+                            "divide by the mean of the y values. Then multiply by 100 to get the percentage for average monthly growth rate. ",
+                            className="method-text"
+                        )
+                    ]),
+
+                    # Exponential Growth Rate
+                    html.Div(className="method-icon-card", children=[
+                        #html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/icons/forecasting.png", className="method-icon"),
+                        html.H3("Exponential Growth Rate", className="method-title"),
+                        html.P(
+                            "We calculated the exponential monthly growth rate by using the formula: (exp(coef) - 1) * 100, "
+                            "where coef is the coefficient of the exponential trend line. This gives us the average monthly growth rate as a percentage.",
+                            className="method-text"
+                        )
+                    ]),
+
+                    # Linear Regression Model
+                    html.Div(className="method-icon-card", children=[
+                        html.Img(src="https://storage.googleapis.com/evenergy163.appspot.com/icons/correlation.png", className="method-icon"),
+                        html.H3("Linear Regression", className="method-title"),
+                        html.P(
+                                "We used Linear regression model to determine where a trend is either linear or exponential. For exponential model, "
+                                "we fitted the model with the log transformed y values. Transform exponenetial data to linear data. Then we compared both models "
+                                "r-squared values to determine which model fits better. ",
                             className="method-text"
                         )
                     ]),
