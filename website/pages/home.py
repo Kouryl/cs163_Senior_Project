@@ -17,12 +17,28 @@ layout = html.Div(className="page-container", children=[
             autoPlay=True, muted=True, loop=True,
             className="hero-video"
         ),
+        
         html.Div(className="hero-overlay", children=[
             html.H2("Discover EV Adoption Trends", className="hero-title"),
             html.P("See how EV growth is reshaping our energy grid", className="hero-subtitle"),
             html.A("Explore Insights", href="/objective", className="hero-cta")
         ]),
     ]),
+    
+html.Div(
+    className="video-caption",
+    children=[
+        "Video courtesy of ",
+        html.A(
+            "YouTube – Autel MaxiChargers | EV Charging Stations",
+            href="https://www.youtube.com/watch?v=juoAoIqexJs",
+            target="_blank",
+            rel="noopener noreferrer"
+        ),
+        " (Nov 18, 2021)"
+    ]
+),
+
 
     html.Div(className="cards-container", children=[
 
