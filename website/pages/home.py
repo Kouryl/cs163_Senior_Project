@@ -39,7 +39,6 @@ html.Div(
     ]
 ),
 
-
     html.Div(className="cards-container", children=[
 
         # Project Overview
