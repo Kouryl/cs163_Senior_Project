@@ -22,12 +22,13 @@ Understanding EV adoption trends enables utilities and policymakers to assess en
 ### 2. Data Collection
 - Sources:
   - Electricity and gasoline price data (2000–2024)
-  - Public EV charging station data
+  - Public EV charging station data from EVWatts (2019-2022)
 - Methods: CSV import and data merging
 
 ### 3. Data Cleaning and Preprocessing
 - Removed missing or inconsistent entries
 - Standardized date formats and units
+- Merged EV session data with EVSE data
 
 ### 4. Exploratory Data Analysis (EDA)
 - Visualized trends in EV growth over time and across regions
@@ -42,7 +43,7 @@ Understanding EV adoption trends enables utilities and policymakers to assess en
 
 ### 6. Modeling and Prediction
 - Applied regression and time series models to:
-  - Forecast EV growth in the Pacific region
+  - Forecast EV growth in the Pacific region using charging ssession counts and energy usage.
   - Estimate electricity and fuel prices
 
 ### 7. Evaluation and Interpretation
@@ -55,6 +56,7 @@ Understanding EV adoption trends enables utilities and policymakers to assess en
 
 ### 9. Deployment
 - Delivered results interactive web dashboard
+  - Website uses plotly for visualization, and loads images of plots for large datasets.
 
 ## SETUP Instructions
 
