@@ -32,18 +32,19 @@ Understanding EV adoption trends enables utilities and policymakers to assess en
 
 ### 4. Exploratory Data Analysis (EDA)
 - Visualized trends in EV growth over time and across regions
-- Investigated correlations between electric and gas price trends
-- Forecasted future electric and gas prices.
+- Investigated correlations between electric and gasoline price trends
+- Forecasted future electric and gasoline prices.
 - Forecasted future energy usage in the Pacific region
 
 ### 5. Feature Engineering
 - Created additional metrics:
-  - Annual fuel cost and electric rate comparison
+  - Merged and aligned historical gasoline prices and electric utility rates (2000–2024)
+  - Cleaned and standardized time series data from both gasoline and electric sources
   - Created new feature (month_year), derived from the charging date.
 
 ### 6. Modeling and Prediction
 - Applied regression and time series models to:
-  - Forecast EV growth in the Pacific region using charging ssession counts and energy usage.
+  - Forecast EV growth in the Pacific region using charging session counts and energy usage.
   - Estimate electricity and fuel prices
 
 ### 7. Evaluation and Interpretation
