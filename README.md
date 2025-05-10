@@ -65,5 +65,5 @@ gcloud app deploy
 
 ## Project Directories
 
-website - folder for making website
-notebook - folder for notebooks for analysis
+- website - folder for making website
+- notebook - folder for notebooks for analysis
