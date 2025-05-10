@@ -39,7 +39,7 @@ Understanding EV adoption trends enables utilities and policymakers to assess en
 ### 5. Feature Engineering
 - Created additional metrics:
   - Annual fuel cost and electric rate comparison
-  - 
+  - Created new feature (month_year), derived from the charging date.
 
 ### 6. Modeling and Prediction
 - Applied regression and time series models to:
